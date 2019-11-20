@@ -1,0 +1,19 @@
+dubbo:
+  registry:
+    address: zookeeper://192.168.40.13:2181
+    username: leamem
+    password: WhiteWinter
+    simplified: true
+  application:
+    name: winter-provider
+  config-center:
+    address: zookeeper://192.168.40.13:2181
+
+#    注册中心
+    username: leamem
+    password: WhiteWinter
+
+
+  metadata-report:
+    address: zookeeper://192.168.40.13:2181
+

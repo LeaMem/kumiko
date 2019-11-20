@@ -1,0 +1,13 @@
+dubbo:
+  application:
+    name: consumers
+  registry:
+    address: zookeeper://192.168.40.13:2181
+    username: leamem
+    password: WhiteWinter
+    check: false
+  consumer:
+    check: false
+server:
+  port: 9999
+
