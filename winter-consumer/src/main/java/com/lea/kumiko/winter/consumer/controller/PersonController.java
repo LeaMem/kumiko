@@ -4,7 +4,6 @@ import com.lea.kumiko.api.dto.Person;
 import com.lea.kumiko.api.service.PersonService;
 import org.apache.dubbo.config.annotation.Reference;
 import org.apache.zookeeper.*;
-import org.apache.zookeeper.data.ACL;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,7 +12,7 @@ import java.io.IOException;
 @RestController
 public class PersonController {
 
-    @Reference
+    @Reference(group = "primary")
     PersonService personService;
 
     @RequestMapping(value = "findOne")

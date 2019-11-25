@@ -12,6 +12,7 @@
         <module>winter-provider</module>
         <module>winter-consumer</module>
         <module>api</module>
+        <module>natty</module>
     </modules>
 
     <properties>
@@ -54,6 +55,12 @@
                 <version>4.2.0</version>
             </dependency>
 
+            <!-- https://mvnrepository.com/artifact/io.netty/netty-all -->
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-all</artifactId>
+                <version>4.1.43.Final</version>
+            </dependency>
 
 
         </dependencies>
