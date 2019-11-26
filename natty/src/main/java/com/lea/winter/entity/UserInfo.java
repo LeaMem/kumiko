@@ -30,7 +30,9 @@ public class UserInfo {
     private Channel channel;
 
 
-
+    public void setUserId() {
+        this.userId = uidGener.incrementAndGet();
+    }
 
 
 }

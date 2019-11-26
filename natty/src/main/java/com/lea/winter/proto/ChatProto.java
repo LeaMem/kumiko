@@ -1,7 +1,10 @@
 package com.lea.winter.proto;
 
+import com.alibaba.fastjson.JSONObject;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,6 +37,35 @@ public class ChatProto {
         this.body = body;
     }
 
+    public static String buildMessProto(int uid, String nick, String mess){
+        ChatProto chatProto = new ChatProto(MESS_PROTO, mess);
+        chatProto.extend.put("uid", uid);
+        chatProto.extend.put("nick", nick);
+        chatProto.extend.put("time", getTime());
+        return JSONObject.toJSONString(chatProto);
+    }
+
+    public static String buildSysProto(int code, Object mess){
+        ChatProto chatProto = new ChatProto(SYST_PROTO, null);
+        chatProto.extend.put("code", code);
+        chatProto.extend.put("mess", mess);
+        return JSONObject.toJSONString(chatProto);
+    }
+
+
+    public static String buildPingProto(){
+        return buildProto(PING_PROTO, null);
+    }
+
+    public static String buildProto(int head, String body){
+        ChatProto chatProto = new ChatProto(head, body);
+        return JSONObject.toJSONString(chatProto);
+    }
+
+    public static final String getTime(){
+        LocalDateTime now = LocalDateTime.now();
+        return now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
 
     public static void main(String[] args) {
         System.out.println(3 << 8);
