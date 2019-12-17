@@ -1,4 +1,4 @@
-package com.lea.winter.entity;
+package com.lea.winter.chat.entity;
 
 import io.netty.channel.Channel;
 import lombok.Data;

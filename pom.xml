@@ -13,6 +13,7 @@
         <module>winter-consumer</module>
         <module>api</module>
         <module>natty</module>
+        <module>juc</module>
     </modules>
 
     <properties>

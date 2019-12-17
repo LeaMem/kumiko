@@ -1,10 +1,10 @@
-package com.lea.winter.handler;
+package com.lea.winter.chat.handler;
 
 import com.alibaba.fastjson.JSONObject;
-import com.lea.winter.entity.UserInfo;
-import com.lea.winter.proto.ChatCode;
-import com.lea.winter.util.Constants;
-import com.lea.winter.util.NettyUtil;
+import com.lea.winter.chat.entity.UserInfo;
+import com.lea.winter.chat.proto.ChatCode;
+import com.lea.winter.chat.util.Constants;
+import com.lea.winter.chat.util.NettyUtil;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;

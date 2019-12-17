@@ -1,4 +1,4 @@
-package com.lea.winter.proto;
+package com.lea.winter.chat.proto;
 
 public class ChatCode {
 

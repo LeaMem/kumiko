@@ -1,4 +1,4 @@
-package com.lea.winter.util;
+package com.lea.winter.chat.util;
 
 import io.netty.channel.Channel;
 import lombok.extern.slf4j.Slf4j;

@@ -1,4 +1,4 @@
-package com.lea.winter.core;
+package com.lea.winter.chat.core;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;

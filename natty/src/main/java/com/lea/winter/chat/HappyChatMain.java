@@ -1,7 +1,7 @@
-package com.lea.winter;
+package com.lea.winter.chat;
 
 
-import com.lea.winter.util.Constants;
+import com.lea.winter.chat.util.Constants;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

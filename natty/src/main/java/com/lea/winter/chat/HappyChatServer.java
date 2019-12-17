@@ -1,9 +1,9 @@
-package com.lea.winter;
+package com.lea.winter.chat;
 
-import com.lea.winter.core.BaseServer;
-import com.lea.winter.handler.MessageHandler;
-import com.lea.winter.handler.UserAuthHandler;
-import com.lea.winter.handler.UserInfoManager;
+import com.lea.winter.chat.core.BaseServer;
+import com.lea.winter.chat.handler.MessageHandler;
+import com.lea.winter.chat.handler.UserAuthHandler;
+import com.lea.winter.chat.handler.UserInfoManager;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.socket.SocketChannel;

@@ -1,4 +1,4 @@
-package com.lea.winter.proto;
+package com.lea.winter.chat.proto;
 
 import com.alibaba.fastjson.JSONObject;
 import lombok.Data;

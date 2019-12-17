@@ -1,4 +1,4 @@
-package com.lea.winter.util;
+package com.lea.winter.chat.util;
 
 public class BlankUtil {
 

@@ -1,4 +1,4 @@
-package com.lea.winter.core;
+package com.lea.winter.chat.core;
 
 public interface Server {
 

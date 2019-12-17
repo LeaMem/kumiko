@@ -1,8 +1,8 @@
-package com.lea.winter.handler;
+package com.lea.winter.chat.handler;
 
-import com.lea.winter.entity.UserInfo;
-import com.lea.winter.proto.ChatProto;
-import com.lea.winter.util.NettyUtil;
+import com.lea.winter.chat.entity.UserInfo;
+import com.lea.winter.chat.proto.ChatProto;
+import com.lea.winter.chat.util.NettyUtil;
 import io.netty.channel.Channel;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import lombok.extern.slf4j.Slf4j;
