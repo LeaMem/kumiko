@@ -1,0 +1,40 @@
+1. ant desing style不起作用
+ 
+        import 'antd/dist/antd.css' 
+
+2. 共享 redis 要重新启动
+
+        配置 redis 去写权限
+        dir
+        log
+        passwd
+
+3. 设置NGINX，把真实IP转发过来
+
+        location / {
+    proxy_pass http://127.0.0.1:8008/;
+    proxy_set_header Host                          $host;
+    proxy_set_header X-Real-IP                  $remote_addr;
+    proxy_set_header X-Forwarded-For      $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto   $scheme;
+    proxy_redirect                                         off;
+}
+
+4. pathvariable 竟然还可以匹配正则表达式，我是佛了， https://blog.csdn.net/yyhlichao/article/details/85044671
+
+=====
+        开放 ip 更新
+        1. nginx配置修改
+        2. db包部署
+        3. 数据库表
+        4. 后端，前端部署
+
+5. 指令重排序 https://www.jianshu.com/p/07431a049296
+6.debug看到的是哪里的值？寄存器还是内存
+7.synchronized 写入数据会不会同步到内存中
+8.java锁也是要有内存可见性的 http://ifeve.com/java%E9%94%81%E6%98%AF%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%81%E6%80%A7%E7%9A%84/
+9.双重校验 volatile 是为了防止指令重排序 https://www.zhihu.com/question/56606703
+10.concurrentHashMap 构造函数是否线程安全  ConcurrentModificationException
+11. traverse whille modify item will occur ConcurrentModificationExceptions， 怎么出发报错的
+12. spring boot tomcat 是不是 nio模型， 因为不是 长连接 ， 等我设置 keep-alive 再试试
+13. 读写引用类型变量是原子的  https://stackoverflow.com/questions/2576513/is-writing-a-reference-atomic-on-64bit-vms
