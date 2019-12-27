@@ -1,6 +1,6 @@
 1. ant desing style不起作用
- 
-        import 'antd/dist/antd.css' 
+
+        import 'antd/dist/antd.css'
 
 2. 共享 redis 要重新启动
 
@@ -38,3 +38,16 @@
 11. traverse whille modify item will occur ConcurrentModificationExceptions， 怎么出发报错的
 12. spring boot tomcat 是不是 nio模型， 因为不是 长连接 ， 等我设置 keep-alive 再试试
 13. 读写引用类型变量是原子的  https://stackoverflow.com/questions/2576513/is-writing-a-reference-atomic-on-64bit-vms
+14. spring boot 关闭
+15. 98，113页
+16. 114线程中断
+17. 设计线程响应中断，wait, sleep, join 抛出 interruptedException
+18. future cancel 方法
+19. 126 take会一直阻塞，并不能关闭
+20. 远程服务器时间不对
+21. http://www.jacarrichan.com/2017/01/12/Analyze-memory-barriers-with-hsdis 查看 assembly
+22. threadPool unCaughtExceptionHandler
+23. threadPool 设置 coreSize 为0 会怎么样，是不是要到任务队列满了才开始创建线程
+
+- Queue 类型，无界队列，有界队列，同步移交(Synchronous Handoff) 这个是啥
+- Semaphore 的使用
