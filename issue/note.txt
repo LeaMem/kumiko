@@ -51,3 +51,5 @@
 
 - Queue 类型，无界队列，有界队列，同步移交(Synchronous Handoff) 这个是啥
 - Semaphore 的使用
+- 哪些类响应中断
+- future 中讲的比较好的 https://www.jianshu.com/p/69a6ae850736

@@ -1,5 +1,7 @@
 package com.lea.kumiko.juc.basic;
 
+import java.util.Arrays;
+
 public class ThreadHappensBefore {
 
 //    public static volatile boolean flag = false;
@@ -13,42 +15,19 @@ public class ThreadHappensBefore {
 
     public static void main(String[] args) throws InterruptedException {
 
-        ThreadHappensBefore before = new ThreadHappensBefore();
-
-
-
-         new Thread(new Runnable() {
+        Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                int i = 0;
-                while(!flag){
-//                    System.out.println("flag 地址是 " + System.identityHashCode(flag));
-                    System.out.println(System.currentTimeMillis() + "fail");
-                    i++;
-                }
-                System.out.println("flag 地址是 " + System.identityHashCode(flag));
-                System.out.println("结束");
-                System.out.println("count = " + i);
+                System.out.println("kitty");
             }
-        }).start();
+        }, "kitty");
 
-        Thread.sleep(1000L);
+        thread.start();
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                System.out.println(System.currentTimeMillis() + "准备写");
-//                setFlag();
-                flag = true;
-                System.out.println(System.currentTimeMillis() + "写好了");
-            }
-        }).start();
+        System.out.println(Arrays.toString(Thread.currentThread().getStackTrace()));
 
 
-
-
-
-       Thread.sleep(5000L);
+        Thread.sleep(5000L);
 
 
     }
