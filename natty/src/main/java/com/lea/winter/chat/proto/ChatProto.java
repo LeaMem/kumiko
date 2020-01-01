@@ -68,8 +68,9 @@ public class ChatProto {
     }
 
     public static void main(String[] args) {
-        System.out.println(3 << 8);
-        System.out.println(PONG_PROTO);
+        Map<String, Object> map = new HashMap<>();
+        map.put("kitty", 1);
+        System.out.println(map.size());
     }
 
 }
