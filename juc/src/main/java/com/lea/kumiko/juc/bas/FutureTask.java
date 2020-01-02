@@ -4,8 +4,9 @@ import java.util.concurrent.*;
 import java.util.concurrent.locks.LockSupport;
 
 /**
- *      https://segmentfault.com/a/1190000013843003
- *      https://www.jianshu.com/p/69a6ae850736
+ * https://segmentfault.com/a/1190000013843003
+ * https://www.jianshu.com/p/69a6ae850736
+ *
  * @param <V>
  */
 
@@ -95,30 +96,30 @@ public class FutureTask<V> implements RunnableFuture<V> {
             return;
         }
 
-        try{
+        try {
 
             //reload
             Callable<V> c = callable;
 
             // 任务执行完成 callable 就设置成 null
             // todo 任务没被 cancel 的时候才继续
-            if(c != null && state == NEW){
+            if (c != null && state == NEW) {
                 V result;
                 boolean ran;
-                try{
+                try {
                     result = c.call();
                     ran = true;
                 } catch (Exception e) {
                     result = null;
-                    ran =false;
+                    ran = false;
                     //出现异常，更新状态
                     setException(e);
                 }
-                if(ran){
+                if (ran) {
                     set(result);
                 }
             }
-        }finally {
+        } finally {
 
             /**
              *      todo 不懂
@@ -132,7 +133,7 @@ public class FutureTask<V> implements RunnableFuture<V> {
             //reload， 因为防止 store_store 的 happens before
             int s = state;
             //已经中断了
-            if(s >= INTERRUPTING){
+            if (s >= INTERRUPTING) {
                 handlePossibleCancellationInterrupt(s);
             }
         }
@@ -150,24 +151,24 @@ public class FutureTask<V> implements RunnableFuture<V> {
         // 不是new 的话 说明已经启动完成
         // state == NEW, cas 比较，mayInterrupt true 的话走 NEW -> INTERRUPTING -> INTERRUPTED
         // mayInterrupt false 的话走  NEW -> CANCELLED
-        if(!(state == NEW && UNSAFE.compareAndSwapInt(this, stateOffset, NEW, mayInterruptIfRunning ? INTERRUPTING : CANCELLED))){
+        if (!(state == NEW && UNSAFE.compareAndSwapInt(this, stateOffset, NEW, mayInterruptIfRunning ? INTERRUPTING : CANCELLED))) {
             return false;
         }
 
-        try{
-            if(mayInterruptIfRunning){
-                try{
+        try {
+            if (mayInterruptIfRunning) {
+                try {
                     Thread t = runner;
                     //已经在启动了
-                    if(t != null){
+                    if (t != null) {
                         t.interrupt();
                     }
-                }finally {
+                } finally {
                     //final state
                     UNSAFE.putOrderedInt(this, stateOffset, INTERRUPTED);
                 }
             }
-        }finally {
+        } finally {
             //TODO finishCompletion()
         }
         return true;
@@ -185,10 +186,9 @@ public class FutureTask<V> implements RunnableFuture<V> {
 
     @Override
     public V get() throws InterruptedException, ExecutionException {
-        //为啥这里要这样写
+
         int s = state;
-        //未完成
-        if(s <= COMPLETING){
+        if (s <= COMPLETING) {
             s = awaitDone(false, 0L);
         }
 
@@ -200,14 +200,15 @@ public class FutureTask<V> implements RunnableFuture<V> {
         return null;
     }
 
-    private V report(int s) throws ExecutionException{
+    private V report(int s) throws ExecutionException {
         Object x = outCome;
-        if(s == NORMAL){
+        if (s == NORMAL) {
             return (V) x;
-        }if(s >= CANCELLED){
+        }
+        if (s >= CANCELLED) {
             throw new CancellationException();
         }
-        throw new ExecutionException((Throwable)x);
+        throw new ExecutionException((Throwable) x);
     }
 
     /**
@@ -216,96 +217,156 @@ public class FutureTask<V> implements RunnableFuture<V> {
      * @param nanos
      * @return
      */
-    private int awaitDone(boolean timed, long nanos) throws InterruptedException{
+    private int awaitDone(boolean timed, long nanos) throws InterruptedException {
+//        final long deadline = timed ? System.nanoTime() + nanos : 0L;
+//        WaitNode q = null;
+//        boolean queued = false;
+//
+//
+//        for(;;){
+//
+//            if(Thread.interrupted()){
+//                //todo removeWaiter(q);
+//                removeWaiter(q);
+//                throw new InterruptedException();
+//            }
+//
+//            int s = state;
+//            //任务已经完成 或者 取消
+//            //这里的 q 不是一定是 null吗
+//            if(s > COMPLETING){
+//                if(q != null){
+//                    q.thread = null;
+//                }
+//                return s;
+//            }else if(s == COMPLETING){
+//                Thread.yield();
+//            }else if (q == null){
+//                q = new WaitNode();
+//            }else if (!queued){
+//
+//                //这是什么神仙操作
+//                //todo 这里如果失败了怎样
+//                queued = UNSAFE.compareAndSwapObject(this, waitersOffset, q.next = waiters, q);
+//            }else if (timed){
+//                nanos = deadline - System.nanoTime();
+//                if(nanos <= 0L){
+//                    //todo removeWaiter(q) 超时了
+//                    removeWaiter(q);
+//                    return state;
+//                }
+//                // LockSupport 是啥, 这是应该是具体的阻塞了
+//                LockSupport.parkNanos(this, nanos);
+//            }else{
+//                LockSupport.park(this);
+//            }
+//
+//        }
+
         final long deadline = timed ? System.nanoTime() + nanos : 0L;
         WaitNode q = null;
         boolean queued = false;
-
-
         for(;;){
 
+            //监听中断
             if(Thread.interrupted()){
-                //todo removeWaiter(q);
                 removeWaiter(q);
                 throw new InterruptedException();
             }
 
+            //reload store-store
             int s = state;
-            //任务已经完成 或者 取消
-            //这里的 q 不是一定是 null吗
+
+            //任务已经完成,就不要阻塞了
             if(s > COMPLETING){
+                //已经过了第一次for循环
+                //todo
                 if(q != null){
                     q.thread = null;
                 }
                 return s;
-            }else if(s == COMPLETING){
+            }else if (s == COMPLETING){
+                //自旋
                 Thread.yield();
             }else if (q == null){
+                //这里 state 只能是 NEW 了，说明任务还没启动或者正在run
                 q = new WaitNode();
             }else if (!queued){
-
-                //这是什么神仙操作
-                //todo 这里如果失败了怎样
+                //加入队列
                 queued = UNSAFE.compareAndSwapObject(this, waitersOffset, q.next = waiters, q);
             }else if (timed){
                 nanos = deadline - System.nanoTime();
+
+                //已经超时了
+                //todo 没看懂
                 if(nanos <= 0L){
-                    //todo removeWaiter(q) 超时了
                     removeWaiter(q);
                     return state;
                 }
-                // LockSupport 是啥, 这是应该是具体的阻塞了
+
                 LockSupport.parkNanos(this, nanos);
+
             }else{
                 LockSupport.park(this);
             }
-
         }
     }
 
 
-    private void removeWaiter(WaitNode node){
-        if(node != null){
+    /**
+     *      又是自旋
+     * @param node
+     */
+    private void removeWaiter(WaitNode node) {
+        //标记线程
+        //这里判断是为了判断啥？已经别修改了吗？？不对吧，thread是唯一的
+        //怪不得要判断 node 非空，如果 get 一开始就发现中断，那么就要判断了
+        if (node != null) {
             node.thread = null;
 
             retry:
+            for (; ; ) {
+                for (WaitNode pred = null, q = waiters, s; q != null; q = s) {
 
-                for(;;){
+                    s = q.next;
 
-                    for(WaitNode pred = null, q = waiters, s; q != null; q = s){
-                        s = q.next;
-                        if(q.thread != null){
-                            pred = q;
-                        }else if (pred != null){
-                            pred.next = s;
-                            if(pred.thread == null){
-                                //check for race
-                                continue retry;
-                            }
-                        }
-                        else if (!UNSAFE.compareAndSwapObject(this, waitersOffset, q, s)){
+                    //继续往下走，找到打上标记的节点
+                    if (q.thread != null) {
+                        pred = q;
+                    } else if (pred != null) {
+                        //要移除的元素不在栈顶，并且找到了要移除的元素
+                        //第一次 pred 是 null
+                        pred.next = s;
+                        //单线程链表删除节点是这样写，但是这里为了方式并发标记pred节点
+                        if (pred.thread == null) {
                             continue retry;
                         }
-                    }
 
-                    break;
+                    } else if (!UNSAFE.compareAndSwapObject(this, waitersOffset, q, s)) {
+
+                        //栈顶的节点就是要删除的
+
+                        continue retry;
+                    }
                 }
+                break;
+            }
         }
     }
 
 
-    private void finishCompletion(){
+    private void finishCompletion() {
 
-        for(WaitNode q; (q = waiters) != null;){
-            if(UNSAFE.compareAndSwapObject(this, waitersOffset, q, null)){
-                for(;;){
+        for (WaitNode q; (q = waiters) != null; ) {
+            if (UNSAFE.compareAndSwapObject(this, waitersOffset, q, null)) {
+                for (; ; ) {
                     Thread t = q.thread;
-                    if(t != null){
+                    if (t != null) {
                         q.thread = null;
                         LockSupport.unpark(t);
                     }
                     WaitNode next = q.next;
-                    if(next == null){
+                    if (next == null) {
                         break;
                     }
                     q.next = null;
@@ -322,15 +383,13 @@ public class FutureTask<V> implements RunnableFuture<V> {
      *      todo    不懂
      * @param s
      */
-    private void handlePossibleCancellationInterrupt(int s){
-        if(s == INTERRUPTING){
-            while(state == INTERRUPTING){
+    private void handlePossibleCancellationInterrupt(int s) {
+        if (s == INTERRUPTING) {
+            while (state == INTERRUPTING) {
                 Thread.yield();
             }
         }
     }
-
-
 
 
     /**
@@ -338,9 +397,9 @@ public class FutureTask<V> implements RunnableFuture<V> {
      *    除非已经设置了此 Future 或已将其取消，否则它将报告一个 ExecutionException，并将给定的 throwable 作为其原因。在计算失败时通过 run 方法内部调用此方法
      * @param t
      */
-    protected void setException(Throwable t){
+    protected void setException(Throwable t) {
         // cas 设置 COMPLETING 状态
-        if(UNSAFE.compareAndSwapInt(this, stateOffset, NEW, COMPLETING)){
+        if (UNSAFE.compareAndSwapInt(this, stateOffset, NEW, COMPLETING)) {
             outCome = t;
 
             UNSAFE.putOrderedInt(this, stateOffset, EXCEPTIONAL);
@@ -356,9 +415,9 @@ public class FutureTask<V> implements RunnableFuture<V> {
      *      除非已经设置了此 Future 或已将其取消，否则将其结果设置为给定的值。在计算成功完成时通过 run 方法内部调用此方法。
      * @param v
      */
-    protected void set(V v){
+    protected void set(V v) {
 
-        if(UNSAFE.compareAndSwapInt(this, stateOffset, NEW , COMPLETING)){
+        if (UNSAFE.compareAndSwapInt(this, stateOffset, NEW, COMPLETING)) {
             outCome = v;
             UNSAFE.putOrderedInt(this, stateOffset, NORMAL);
 
