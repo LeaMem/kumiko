@@ -88,59 +88,31 @@ public class AbstractQueuedSynchronizer
 
     static final long spinForTimeoutThreshold = 1000L;
 
-    private Node enq(final Node node) {
-        for (; ; ) {
-            Node t = tail;
-            if (t == null) {
-                if (compareAndSetHead(new Node())) {
-                    tail = head;
-                }
-            } else {
 
-                //这里终归是要成功的
-                node.prev = t;
-                if(compareAndSetTail(t, node)){
-                    t.next = node;
-                    return t;
-                }
+    protected boolean tryAcquire(int acquires) {
+        final Thread current = Thread.currentThread();
+        int c = getState();
+        if (c == 0) {
+//            if(!)
+            if(!hasQueuedPredecessors()){
+
             }
         }
     }
 
-    /**
-     *      入队列
-     *
-     * @param mode
-     * @return
-     */
-    private Node addWaiter(Node mode){
-        Node node = new Node(Thread.currentThread(), mode);
-        Node pred = tail;
-        if(pred != null){
-            node.prev = pred;
-            //尝试一次，不是每次都是高并发状态
-            if(compareAndSetTail(pred, node)){
-                pred.next = node;
-                return node;
-            }
-        }
-        enq(node);
-        return node;
+
+    public final boolean hasQueuedPredecessors() {
+
+        //根据 happens before原则，读到的 head是一个有效值
+        Node t = tail;
+        Node h = head;
+        Node s;
+
+        return h != t &&
+                //compareAndSetHead 之后  head = new Head, tail = null, head.next == null
+                ((s = h.next) == null || s.thread != Thread.currentThread());
     }
 
-    private void setHead(Node node){
-        head = node;
-        node.thread = null;
-        node.prev = null;
-    }
-
-    //todo 这个不懂
-    private void unparkSuccessor(Node node){
-        int ws = node.waitStatus;
-        if(ws < 0){
-
-        }
-    }
 
     private static final Unsafe unsafe = Unsafe.getUnsafe();
     private static final long stateOffset;
@@ -167,7 +139,7 @@ public class AbstractQueuedSynchronizer
         return unsafe.compareAndSwapObject(this, tailOffset, expect, update);
     }
 
-    private static boolean compareAndSetWaitStatus(Node node, int expect, int update){
+    private static boolean compareAndSetWaitStatus(Node node, int expect, int update) {
         return unsafe.compareAndSwapInt(node, waitStatusOffset, expect, update);
     }
 
