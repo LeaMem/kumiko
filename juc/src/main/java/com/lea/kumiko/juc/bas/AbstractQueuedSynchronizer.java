@@ -89,16 +89,16 @@ public class AbstractQueuedSynchronizer
     static final long spinForTimeoutThreshold = 1000L;
 
 
-    protected boolean tryAcquire(int acquires) {
-        final Thread current = Thread.currentThread();
-        int c = getState();
-        if (c == 0) {
-//            if(!)
-            if(!hasQueuedPredecessors()){
-
-            }
-        }
-    }
+//    protected boolean tryAcquire(int acquires) {
+//        final Thread current = Thread.currentThread();
+//        int c = getState();
+//        if (c == 0) {
+////            if(!)
+//            if(!hasQueuedPredecessors()){
+//
+//            }
+//        }
+//    }
 
 
     public final boolean hasQueuedPredecessors() {
@@ -110,7 +110,8 @@ public class AbstractQueuedSynchronizer
 
         return h != t &&
                 //compareAndSetHead 之后  head = new Head, tail = null, head.next == null
-                ((s = h.next) == null || s.thread != Thread.currentThread());
+                ((s = h.next) == null
+                        || s.thread != Thread.currentThread());
     }
 
 
