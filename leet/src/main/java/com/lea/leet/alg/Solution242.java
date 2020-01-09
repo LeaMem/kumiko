@@ -1,4 +1,4 @@
-package com.lea.leet.concurrent;
+package com.lea.leet.alg;
 
 import java.util.HashMap;
 import java.util.Map;

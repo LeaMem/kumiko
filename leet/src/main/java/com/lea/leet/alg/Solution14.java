@@ -1,4 +1,4 @@
-package com.lea.leet.concurrent;
+package com.lea.leet.alg;
 
 import java.util.Arrays;
 import java.util.Comparator;

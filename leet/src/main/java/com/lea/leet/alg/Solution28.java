@@ -1,4 +1,4 @@
-package com.lea.leet.concurrent;
+package com.lea.leet.alg;
 
 public class Solution28 {
 

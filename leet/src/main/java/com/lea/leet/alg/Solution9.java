@@ -1,7 +1,4 @@
-package com.lea.leet.concurrent;
-
-import java.util.ArrayList;
-import java.util.List;
+package com.lea.leet.alg;
 
 public class Solution9 {
 
