@@ -1,5 +1,6 @@
 package com.lea.kumiko.juc.lang.map;
 
+import java.io.Serializable;
 import java.util.*;
 
 public abstract class AbstractMap<K, V> implements Map<K, V> {
@@ -69,16 +70,19 @@ public abstract class AbstractMap<K, V> implements Map<K, V> {
         if (key == null) {
             while (i.hasNext()) {
                 Entry<K, V> e = i.next();
-                if (e.getKey() == null)
+                if (e.getKey() == null) {
                     return e.getValue();
+                }
             }
         } else {
             while (i.hasNext()) {
                 Entry<K, V> e = i.next();
-                if (key.equals(e.getKey()))
+                if (key.equals(e.getValue())) {
                     return e.getValue();
+                }
             }
         }
+
         return null;
     }
 
@@ -94,14 +98,16 @@ public abstract class AbstractMap<K, V> implements Map<K, V> {
         if (key == null) {
             while (correctEntry == null && i.hasNext()) {
                 Entry<K, V> e = i.next();
-                if (e.getKey() == null)
+                if (e.getKey() == null) {
                     correctEntry = e;
+                }
             }
         } else {
             while (correctEntry == null && i.hasNext()) {
                 Entry<K, V> e = i.next();
-                if (key.equals(e.getKey()))
+                if (key.equals(e.getKey())) {
                     correctEntry = e;
+                }
             }
         }
 
@@ -110,13 +116,15 @@ public abstract class AbstractMap<K, V> implements Map<K, V> {
             oldValue = correctEntry.getValue();
             i.remove();
         }
+
         return oldValue;
     }
 
     @Override
     public void putAll(Map<? extends K, ? extends V> m) {
-        for (Entry<? extends K, ? extends V> e : m.entrySet())
+        for (Map.Entry<? extends K, ? extends V> e : m.entrySet()) {
             put(e.getKey(), e.getValue());
+        }
     }
 
     @Override
@@ -132,82 +140,99 @@ public abstract class AbstractMap<K, V> implements Map<K, V> {
         Set<K> ks = keySet;
         if (ks == null) {
             ks = new AbstractSet<K>() {
+                @Override
                 public Iterator<K> iterator() {
                     return new Iterator<K>() {
+
                         private Iterator<Entry<K, V>> i = entrySet().iterator();
 
+                        @Override
                         public boolean hasNext() {
                             return i.hasNext();
                         }
 
+                        @Override
                         public K next() {
                             return i.next().getKey();
                         }
 
+                        @Override
                         public void remove() {
                             i.remove();
                         }
                     };
                 }
 
+                @Override
                 public int size() {
                     return AbstractMap.this.size();
                 }
 
+                @Override
                 public boolean isEmpty() {
                     return AbstractMap.this.isEmpty();
                 }
 
+                @Override
                 public void clear() {
                     AbstractMap.this.clear();
                 }
 
-                public boolean contains(Object k) {
-                    return AbstractMap.this.containsKey(k);
+                @Override
+                public boolean contains(Object o) {
+                    return AbstractMap.this.containsKey(o);
                 }
             };
             keySet = ks;
         }
+
         return ks;
     }
 
-    @Override
     public Collection<V> values() {
         Collection<V> vals = values;
         if (vals == null) {
             vals = new AbstractCollection<V>() {
+                @Override
                 public Iterator<V> iterator() {
                     return new Iterator<V>() {
                         private Iterator<Entry<K, V>> i = entrySet().iterator();
 
+                        @Override
                         public boolean hasNext() {
                             return i.hasNext();
                         }
 
+                        @Override
                         public V next() {
                             return i.next().getValue();
                         }
 
+                        @Override
                         public void remove() {
                             i.remove();
                         }
                     };
                 }
 
+                @Override
                 public int size() {
                     return AbstractMap.this.size();
                 }
 
+                @Override
                 public boolean isEmpty() {
                     return AbstractMap.this.isEmpty();
                 }
 
+                @Override
                 public void clear() {
                     AbstractMap.this.clear();
                 }
 
-                public boolean contains(Object v) {
-                    return AbstractMap.this.containsValue(v);
+                @Override
+                public boolean contains(Object o) {
+                    return AbstractMap.this.containsValue(o);
                 }
             };
             values = vals;
@@ -222,12 +247,10 @@ public abstract class AbstractMap<K, V> implements Map<K, V> {
         return o1 == null ? o2 == null : o1.equals(o2);
     }
 
-
-    public static class SimpleEntry<K, V>
-            implements Entry<K, V>, java.io.Serializable {
-        private static final long serialVersionUID = -8499721149061103585L;
+    public static class SimpleEntry<K, V> implements Entry<K, V>, Serializable {
 
         private final K key;
+
         private V value;
 
         public SimpleEntry(K key, V value) {
@@ -235,37 +258,36 @@ public abstract class AbstractMap<K, V> implements Map<K, V> {
             this.value = value;
         }
 
-        public SimpleEntry(java.util.Map.Entry<? extends K, ? extends V> entry) {
+        public SimpleEntry(Entry<? extends K, ? extends V> entry) {
             this.key = entry.getKey();
             this.value = entry.getValue();
         }
 
+        @Override
         public K getKey() {
             return key;
         }
 
+        @Override
         public V getValue() {
             return value;
         }
 
+        @Override
         public V setValue(V value) {
             V oldValue = this.value;
             this.value = value;
             return oldValue;
         }
 
-
-        public String toString() {
-            return key + "=" + value;
-        }
+        //todo 没有写 hashCode
 
     }
 
-    public static class SimpleImmutableEntry<K, V>
-            implements Entry<K, V>, java.io.Serializable {
-        private static final long serialVersionUID = 7138329143949025153L;
+    public static class SimpleImmutableEntry<K, V> implements Entry<K, V>, Serializable {
 
         private final K key;
+
         private final V value;
 
         public SimpleImmutableEntry(K key, V value) {
@@ -273,25 +295,24 @@ public abstract class AbstractMap<K, V> implements Map<K, V> {
             this.value = value;
         }
 
-        public SimpleImmutableEntry(java.util.Map.Entry<? extends K, ? extends V> entry) {
+        public SimpleImmutableEntry(Entry<? extends K, ? extends V> entry){
             this.key = entry.getKey();
             this.value = entry.getValue();
         }
 
+        @Override
         public K getKey() {
             return key;
         }
 
+        @Override
         public V getValue() {
             return value;
         }
 
+        @Override
         public V setValue(V value) {
             throw new UnsupportedOperationException();
-        }
-
-        public String toString() {
-            return key + "=" + value;
         }
     }
 
