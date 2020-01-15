@@ -6,7 +6,6 @@ dubbo:
     simplified: true
   application:
     name: winter-provider
-    logger: "log4j"
   config-center:
     address: zookeeper://192.168.40.13:2181
 

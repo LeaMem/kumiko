@@ -56,3 +56,11 @@
 - timed_wait
 - 衢州 kafka 日志写到系统盘了
 - shiro 有三个不同的filter
+- es时间满8小时
+- es查询模板要从 alias 中查询
+
+
+### Mysql
+
+- Mysql 复合索引查询
+- myisam  innodb 区别
