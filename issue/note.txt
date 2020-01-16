@@ -64,3 +64,10 @@
 
 - Mysql 复合索引查询
 - myisam  innodb 区别
+
+
+
+
+### Linux
+
+- 查看 closed_wait  netstat -n | awk '/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}'
