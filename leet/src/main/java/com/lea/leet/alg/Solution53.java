@@ -4,12 +4,12 @@ public class Solution53 {
 
     public int maxSubArray(int[] nums) {
 
-        int sum = 0;
-        int cus = 0;
+        int curMax = nums[0];
+        int sum = nums[0];
 
-        for (int num : nums) {
-            cus = Math.max(cus + num, num);
-            sum = Math.max(cus, sum);
+        for(int i = 1; i < nums.length; i++){
+            curMax = Math.max(curMax + nums[i], nums[i]);
+            sum = Math.max(curMax, sum);
         }
 
         return sum;
