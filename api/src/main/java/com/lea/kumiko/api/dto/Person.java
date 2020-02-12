@@ -12,4 +12,23 @@ public class Person implements Serializable {
 
     private Integer age;
 
+    public static void update(Person person){
+        Person tmp = new Person();
+        tmp.setName("tongtong");
+        tmp.setAge(22);
+        person = tmp;
+    }
+
+    public static void update(String s){
+        s = "love kitty";
+    }
+
+    public static void main(String[] args) {
+
+        while(true){
+            System.out.println("kitty");
+        }
+
+
+    }
 }

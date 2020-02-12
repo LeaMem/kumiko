@@ -23,5 +23,6 @@ public class Student extends Person {
     public static void main(String[] args) {
         Person person = new Student("ding");
         System.out.println(person.getName());
+        System.out.println(System.currentTimeMillis());
     }
 }
