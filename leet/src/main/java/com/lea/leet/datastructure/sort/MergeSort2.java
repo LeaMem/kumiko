@@ -1,4 +1,4 @@
-package com.lea.leet.datastructure;
+package com.lea.leet.datastructure.sort;
 
 /**
  * https://www.java67.com/2018/03/mergesort-in-java-algorithm-example-and.html

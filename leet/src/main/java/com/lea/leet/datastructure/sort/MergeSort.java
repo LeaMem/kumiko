@@ -1,4 +1,4 @@
-package com.lea.leet.datastructure;
+package com.lea.leet.datastructure.sort;
 
 
 import java.util.Arrays;

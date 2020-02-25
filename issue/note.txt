@@ -71,3 +71,9 @@
 ### Linux
 
 - 查看 closed_wait  netstat -n | awk '/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}'
+
+
+
+### LeetCode
+
+215 老丢说用快排，变种快排，但是快排我还不会写
