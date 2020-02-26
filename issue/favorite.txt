@@ -1,0 +1,38 @@
+
+###  数据库问题
+
+https://gitbook.cn/gitchat/column/undefined/topic/5d80b26c49b2b1063b529959
+
+
+## 准备
+
+https://github.com/CyC2018/CS-Notes
+https://github.com/xbox1994/Java-Interview
+https://github.com/gzc426/Java-Interview
+https://github.com/lengyue1024/BAT_interviews
+
+------------------------------
+## Interesting sites
+
+https://github.com/lengyue1024/GitHubDaily#java
+
+
+### Git
+
+https://github.com/k88hudson/git-flight-rules/blob/master/README_zh-CN.md
+
+### Resume
+
+https://github.com/resumejob/awesome-resume
+
+### 设计模式
+
+https://github.com/DovAmir/awesome-design-patterns
+
+### Linux 命令
+
+https://github.com/lengyue1024/linux-command
+
+### 数据结构/算法
+
+https://www.cxyxiaowu.com/

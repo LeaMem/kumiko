@@ -77,3 +77,15 @@
 ### LeetCode
 
 215 老丢说用快排，变种快排，但是快排我还不会写
+
+
+== 和 equals
+遇到过哪几种内存泄露
+基本数据类型 背熟
+String StringBuffer StringBuilder区别
+synchronized 和  lock 的区别
+Lock具体的实现
+java集合，arraylist 和 linkedlist
+ioc原理，aop实现
+aop代理的原理
+mybatis 为什么可以执行
