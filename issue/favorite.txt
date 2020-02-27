@@ -40,3 +40,39 @@ https://github.com/lengyue1024/linux-command
 ### 数据结构/算法
 
 https://www.cxyxiaowu.com/
+
+
+
+
+
+#### Resume
+
+- 基本数据类型 背熟
+byte char boolean short int long float double
+
+- == 和 equals
+== 表示比较对象的内存地址  equals 由程序员自己决定两个对象满足什么条件算作是相等,默认是 ==
+
+如果a.equals(b)为true，那么必须保证a.hashCode() == b.hashCode()，因为equals和hashCode的默认实现是基于引用地址的，所以重写其中一个时还需要重写另一个
+
+[http://leeon.cc/posts/java-equals-hashcode/]
+
+- 遇到过哪几种内存泄露
+
+String StringBuffer StringBuilder区别
+synchronized 和  lock 的区别
+Lock具体的实现
+java集合，arraylist 和 linkedlist
+ioc原理，aop实现
+aop代理的原理
+mybatis 为什么可以执行
+
+高可用、高并发，高负载
+
+linux命令
+
+curl
+lsof
+ps
+top
+du -sh
