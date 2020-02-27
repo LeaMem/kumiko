@@ -11,6 +11,10 @@ https://github.com/xbox1994/Java-Interview
 https://github.com/gzc426/Java-Interview
 https://github.com/lengyue1024/BAT_interviews
 
+https://github.com/Snailclimb/JavaGuide
+
+https://github.com/biezhi/java-bible
+
 ------------------------------
 ## Interesting sites
 
