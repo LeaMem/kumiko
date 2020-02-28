@@ -15,6 +15,7 @@
         <module>natty</module>
         <module>juc</module>
         <module>leet</module>
+        <module>ioc</module>
     </modules>
 
     <properties>
