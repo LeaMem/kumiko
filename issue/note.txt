@@ -96,4 +96,6 @@ mybatis 为什么可以执行
 Class.forName()
 ClassLoader
 
+基本类型的包装类 Integer, Boolean, String 的 hashcode 方法的实现说了一遍
+
 300

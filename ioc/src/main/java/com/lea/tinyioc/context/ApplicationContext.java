@@ -1,4 +1,6 @@
 package com.lea.tinyioc.context;
 
-//public interface ApplicationContext extends {
-//}
+import com.lea.tinyioc.beans.factory.BeanFactory;
+
+public interface ApplicationContext extends BeanFactory {
+}

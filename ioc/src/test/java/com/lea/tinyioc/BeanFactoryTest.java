@@ -21,14 +21,14 @@ public class BeanFactoryTest {
         xmlBeanDefinitionReader.loadBeanDefinitions("tinyioc.xml");
 
         // 2. 初始化 BeanFactory 并且注册bean
-        BeanFactory beanFactory = new AutowireCapableBeanFactory();
-        for (Map.Entry<String, BeanDefinition> beanDefinitionEntry : xmlBeanDefinitionReader.getRegistry().entrySet()) {
-            beanFactory.registerBeanDefinition(beanDefinitionEntry.getKey(), beanDefinitionEntry.getValue());
-        }
+//        BeanFactory beanFactory = new AutowireCapableBeanFactory();
+//        for (Map.Entry<String, BeanDefinition> beanDefinitionEntry : xmlBeanDefinitionReader.getRegistry().entrySet()) {
+//            beanFactory.registerBeanDefinition(beanDefinitionEntry.getKey(), beanDefinitionEntry.getValue());
+//        }
 
         // 3. 获取 bean
-        HelloWorldService helloWorldService = (HelloWorldService) beanFactory.getBean("helloWorldService");
-        helloWorldService.helloWorld();
+//        HelloWorldService helloWorldService = (HelloWorldService) beanFactory.getBean("helloWorldService");
+//        helloWorldService.helloWorld();
 
     }
 
