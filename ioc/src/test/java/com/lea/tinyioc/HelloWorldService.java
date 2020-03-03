@@ -1,20 +1,9 @@
 package com.lea.tinyioc;
 
-public class HelloWorldService {
+public interface HelloWorldService {
 
-    private String text;
+    void runAway();
 
-    private OutputService outputService;
+    void helloWorld();
 
-    public void helloWorld(){
-        outputService.output(text);
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public void setOutputService(OutputService outputService) {
-        this.outputService = outputService;
-    }
 }

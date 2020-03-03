@@ -1,5 +1,7 @@
 package com.lea.tinyioc.beans.io;
 
+import com.lea.tinyioc.beans.io.Resource;
+
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
