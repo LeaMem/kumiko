@@ -69,6 +69,10 @@ ioc原理，aop实现
 aop代理的原理
 mybatis 为什么可以执行
 
+http://ifeve.com/java-interview-question/
+http://ifeve.com/%e6%88%91%e7%9a%84%e9%98%bf%e9%87%8c%e9%9d%a2%e8%af%95%e4%b9%8b%e8%b7%af/
+http://ifeve.com/%e6%88%91%e7%9a%84%e9%98%bf%e9%87%8c%e9%9d%a2%e8%af%95%e4%b9%8b%e8%b7%af/
+
 高可用、高并发，高负载
 
 linux命令

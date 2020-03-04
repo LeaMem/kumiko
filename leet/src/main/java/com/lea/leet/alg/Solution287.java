@@ -18,7 +18,7 @@ public class Solution287 {
         }
 
         slow = 0;
-        while(slow != fast){
+        while (slow != fast) {
             slow = nums[slow];
             fast = nums[fast];
         }

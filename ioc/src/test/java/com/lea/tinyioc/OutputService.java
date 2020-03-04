@@ -1,17 +1,8 @@
 package com.lea.tinyioc;
 
-import org.junit.Assert;
 
-public class OutputService {
+public interface OutputService {
 
-    private HelloWorldService helloWorldService;
+    void output(String text);
 
-    public void output(String text){
-        Assert.assertNotNull(helloWorldService);
-        System.out.println(text);
-    }
-
-    public void setHelloWorldService(HelloWorldService helloWorldService) {
-        this.helloWorldService = helloWorldService;
-    }
 }

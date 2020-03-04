@@ -1,6 +1,7 @@
 package com.lea.tinyioc.beans.factory;
 
 import com.lea.tinyioc.beans.BeanDefinition;
+import com.lea.tinyioc.beans.BeanPostProcessor;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -14,6 +15,8 @@ public abstract class AbstractBeanFactory implements BeanFactory {
 
     private final List<String> beanDefinitionNames = new ArrayList<>();
 
+    private List<BeanPostProcessor> beanPostProcessors = new ArrayList<>();
+
     @Override
     public Object getBean(String name) throws Exception {
         BeanDefinition beanDefinition = beanDefinitionMap.get(name);
@@ -24,9 +27,25 @@ public abstract class AbstractBeanFactory implements BeanFactory {
         Object bean = beanDefinition.getBean();
         if (bean == null) {
             bean = doCreateBean(beanDefinition);
+            bean = initializeBean(bean, name);
         }
+
         return bean;
     }
+
+    protected Object initializeBean(Object bean, String name) throws Exception {
+        for (BeanPostProcessor beanPostProcessor : beanPostProcessors) {
+            bean = beanPostProcessor.postProcessBeforeInitialization(bean, name);
+        }
+
+        //todo: initialize method
+        for (BeanPostProcessor beanPostProcessor : beanPostProcessors) {
+            bean = beanPostProcessor.postProcessAfterInitialization(bean, name);
+        }
+
+        return bean;
+    }
+
 
     public void registerBeanDefinition(String name, BeanDefinition beanDefinition) throws Exception {
         beanDefinitionMap.put(name, beanDefinition);
@@ -39,7 +58,16 @@ public abstract class AbstractBeanFactory implements BeanFactory {
      * @param beanDefinition
      * @return
      */
-    protected abstract Object doCreateBean(BeanDefinition beanDefinition) throws Exception;
+    protected Object doCreateBean(BeanDefinition beanDefinition) throws Exception {
+        Object bean = createBeanInstance(beanDefinition);
+        beanDefinition.setBean(bean);
+        applyPropertyValues(bean, beanDefinition);
+        return bean;
+    }
+
+    protected Object createBeanInstance(BeanDefinition beanDefinition) throws Exception {
+        return beanDefinition.getBeanClass().newInstance();
+    }
 
     public void preInstantiateSingletons() throws Exception {
         for (Iterator it = this.beanDefinitionNames.iterator(); it.hasNext(); ) {
@@ -47,4 +75,23 @@ public abstract class AbstractBeanFactory implements BeanFactory {
             getBean(beanName);
         }
     }
+
+    protected void applyPropertyValues(Object bean, BeanDefinition beanDefinition) throws Exception {
+
+    }
+
+    public void addBeanPostProcessor(BeanPostProcessor beanPostProcessor) throws Exception {
+        this.beanPostProcessors.add(beanPostProcessor);
+    }
+
+    public List getBeansForType(Class type) throws Exception {
+        List beans = new ArrayList();
+        for (String beanDefinitionName : beanDefinitionNames) {
+            if (type.isAssignableFrom(beanDefinitionMap.get(beanDefinitionName).getBeanClass())) {
+                beans.add(getBean(beanDefinitionName));
+            }
+        }
+        return beans;
+    }
+
 }

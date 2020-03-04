@@ -1,39 +1,48 @@
 package com.lea.tinyioc.beans.factory;
 
+import com.lea.tinyioc.aop.BeanFactoryAware;
 import com.lea.tinyioc.beans.BeanDefinition;
 import com.lea.tinyioc.BeanReference;
 import com.lea.tinyioc.beans.PropertyValue;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 public class AutowireCapableBeanFactory extends AbstractBeanFactory {
 
-    @Override
-    protected Object doCreateBean(BeanDefinition beanDefinition) throws Exception {
-
-        Object bean = createBeanInstance(beanDefinition);
-        beanDefinition.setBean(bean);
-        applyPropertyValues(bean, beanDefinition);
-        return bean;
-    }
-
-    protected Object createBeanInstance(BeanDefinition beanDefinition) throws Exception {
-        return beanDefinition.getBeanClass().newInstance();
-    }
-
     protected void applyPropertyValues(Object bean, BeanDefinition mbd) throws Exception {
+
+        /**
+         *      这里有什么用
+         */
+        if (bean instanceof BeanFactoryAware) {
+            ((BeanFactoryAware) bean).setBeanFactory(this);
+        }
+
         for (PropertyValue propertyValue : mbd.getPropertyValues().getPropertyValues()) {
-            Field declaredField = bean.getClass().getDeclaredField(propertyValue.getName());
-            declaredField.setAccessible(true);
-
             Object value = propertyValue.getValue();
-
-            if (value instanceof BeanReference) {
+            if (bean instanceof BeanReference) {
                 BeanReference beanReference = (BeanReference) value;
                 value = getBean(beanReference.getName());
             }
-            declaredField.set(bean, value);
+
+            try {
+
+                System.out.println("set" + propertyValue.getName().substring(0, 1).toUpperCase()
+                        + propertyValue.getName().substring(1));
+                Method declaredMethod = bean.getClass()
+                        .getDeclaredMethod("set" + propertyValue.getName().substring(0, 1).toUpperCase()
+                                + propertyValue.getName().substring(1), value.getClass());
+
+                //看懂了，这里起始就是调用 set 方法
+                declaredMethod.invoke(bean, value);
+            } catch (NoSuchMethodException e) {
+                Field declaredField = bean.getClass().getDeclaredField(propertyValue.getName());
+                declaredField.setAccessible(true);
+                declaredField.set(bean, value);
+            }
         }
+
     }
 
 

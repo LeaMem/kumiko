@@ -1,12 +1,7 @@
 package com.lea.tinyioc;
 
 
-import com.lea.tinyioc.beans.BeanDefinition;
-import com.lea.tinyioc.beans.factory.AbstractBeanFactory;
-import com.lea.tinyioc.beans.factory.AutowireCapableBeanFactory;
-import com.lea.tinyioc.beans.factory.BeanFactory;
-import com.lea.tinyioc.beans.io.ResourceLoader;
-import com.lea.tinyioc.beans.xml.XmlBeanDefinitionReader;
+
 import org.junit.Test;
 
 import java.util.Map;
@@ -17,8 +12,8 @@ public class BeanFactoryTest {
     public void test() throws Exception {
 
         // 1. 读取配置文件
-        XmlBeanDefinitionReader xmlBeanDefinitionReader = new XmlBeanDefinitionReader(new ResourceLoader());
-        xmlBeanDefinitionReader.loadBeanDefinitions("tinyioc.xml");
+//        XmlBeanDefinitionReader xmlBeanDefinitionReader = new XmlBeanDefinitionReader(new ResourceLoader());
+//        xmlBeanDefinitionReader.loadBeanDefinitions("tinyioc.xml");
 
         // 2. 初始化 BeanFactory 并且注册bean
 //        BeanFactory beanFactory = new AutowireCapableBeanFactory();
@@ -37,21 +32,21 @@ public class BeanFactoryTest {
     public void testPreInstantiate() throws Exception {
 
         // 读取配置文件
-        XmlBeanDefinitionReader xmlBeanDefinitionReader = new XmlBeanDefinitionReader(new ResourceLoader());
-        xmlBeanDefinitionReader.loadBeanDefinitions("tinyioc.xml");
-
-        // 初始化 BeanFactory 并注册bean
-        AbstractBeanFactory beanFactory = new AutowireCapableBeanFactory();
-        for (String name : xmlBeanDefinitionReader.getRegistry().keySet()) {
-            beanFactory.registerBeanDefinition(name, xmlBeanDefinitionReader.getRegistry().get(name));
-        }
-
-        //初始化
-        beanFactory.preInstantiateSingletons();
-
-        //获取bean
-        HelloWorldService helloWorldService = (HelloWorldService) beanFactory.getBean("helloWorldService");
-        helloWorldService.helloWorld();
+//        XmlBeanDefinitionReader xmlBeanDefinitionReader = new XmlBeanDefinitionReader(new ResourceLoader());
+//        xmlBeanDefinitionReader.loadBeanDefinitions("tinyioc.xml");
+//
+//        // 初始化 BeanFactory 并注册bean
+//        AbstractBeanFactory beanFactory = new AutowireCapableBeanFactory();
+//        for (String name : xmlBeanDefinitionReader.getRegistry().keySet()) {
+//            beanFactory.registerBeanDefinition(name, xmlBeanDefinitionReader.getRegistry().get(name));
+//        }
+//
+//        //初始化
+//        beanFactory.preInstantiateSingletons();
+//
+//        //获取bean
+//        HelloWorldService helloWorldService = (HelloWorldService) beanFactory.getBean("helloWorldService");
+//        helloWorldService.helloWorld();
 
     }
 

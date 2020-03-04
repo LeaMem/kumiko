@@ -5,13 +5,24 @@
 	http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
-    <bean name="outputService" class="com.lea.tinyioc.OutputService">
-        <property name="helloWorldService" ref="helloWorldService"/>
+    <bean id="beanInitializeLogger" class="com.lea.tinyioc.BeanInitializeLogger">
     </bean>
 
-    <bean name="helloWorldService" class="com.lea.tinyioc.HelloWorldServiceImpl">
+    <bean id="outputService" class="com.lea.tinyioc.OutputServiceImpl">
+    </bean>
+
+    <bean id="helloWorldService" class="com.lea.tinyioc.HelloWorldServiceImpl">
         <property name="text" value="Hello World!"/>
         <property name="outputService" ref="outputService"/>
+    </bean>
+
+    <bean id="timeInterceptor" class="com.lea.tinyioc.aop.TimerInterceptor"></bean>
+
+    <bean id="autoProxyCreator" class="com.lea.tinyioc.aop.AspectJAwareAdvisorAutoProxyCreator"></bean>
+
+    <bean id="aspectjAspect" class="com.lea.tinyioc.aop.AspectJExpressionPointcutAdvisor">
+        <property name="advice" ref="timeInterceptor"></property>
+        <property name="expression" value="execution(* us.codecraft.tinyioc.*.*(..))"></property>
     </bean>
 
 </beans>

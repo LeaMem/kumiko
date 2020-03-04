@@ -7,11 +7,6 @@ public class HelloWorldServiceImpl implements HelloWorldService {
     private OutputService outputService;
 
     @Override
-    public void runAway() {
-        System.out.println("kitty");
-    }
-
-    @Override
     public void helloWorld() {
         outputService.output(text);
     }
