@@ -100,7 +100,14 @@ InvocationHandler
 aop联盟
 MethodInterceptor和MethodInvocation
 
+spring ioc怎么防止循环依赖
+
 基本类型的包装类 Integer, Boolean, String 的 hashcode 方法的实现说了一遍
+
+http://gigix.thoughtworkers.org/2018/7/27/dynamic-proxy/
+https://github.com/Snailclimb/JavaGuide/blob/master/docs/system-design/framework/mybatis/mybatis-interview.md
+https://rancho.wang/articles/my_tech_notes/mybatis
+https://blog.csdn.net/xiaokang123456kao/article/details/76228684
 
 300
 

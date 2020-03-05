@@ -2,6 +2,7 @@ package com.lea.tinyioc;
 
 import com.lea.tinyioc.context.ApplicationContext;
 import com.lea.tinyioc.context.ClassPathXmlApplicationContext;
+import com.lea.tinyioc.test.HelloWorldService;
 import org.junit.Test;
 
 public class ApplicationContextTest {
@@ -10,8 +11,11 @@ public class ApplicationContextTest {
     public void test() throws Exception{
 
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("tinyioc.xml");
+
+
         HelloWorldService helloWorldService = (HelloWorldService) applicationContext.getBean("helloWorldService");
         helloWorldService.helloWorld();
+
 
     }
 

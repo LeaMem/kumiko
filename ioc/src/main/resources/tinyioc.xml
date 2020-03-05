@@ -5,8 +5,8 @@
 	http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
-<!--    <bean id="beanInitializeLogger" class="com.lea.tinyioc.BeanInitializeLogger">-->
-<!--    </bean>-->
+    <bean id="beanInitializeLogger" class="com.lea.tinyioc.test.BeanInitializeLogger">
+    </bean>
 
     <bean id="outputService" class="com.lea.tinyioc.test.OutputServiceImpl">
     </bean>
@@ -16,13 +16,13 @@
         <property name="outputService" ref="outputService"/>
     </bean>
 
-    <bean id="timeInterceptor" class="com.lea.tinyioc.aop.TimerInterceptor"></bean>
+<!--    <bean id="timeInterceptor" class="com.lea.tinyioc.test.TimerInterceptor"></bean>-->
 
     <bean id="autoProxyCreator" class="com.lea.tinyioc.aop.AspectJAwareAdvisorAutoProxyCreator"></bean>
 
     <bean id="aspectjAspect" class="com.lea.tinyioc.aop.AspectJExpressionPointcutAdvisor">
-        <property name="advice" ref="timeInterceptor"></property>
-        <property name="expression" value="execution(* com.lea.tinyioc.*.*(..))"></property>
+<!--        <property name="advice" ref="timeInterceptor"></property>-->
+        <property name="expression" value="execution(* com.lea.tinyioc.test.HelloWorldService.*(..))"></property>
     </bean>
 
 </beans>

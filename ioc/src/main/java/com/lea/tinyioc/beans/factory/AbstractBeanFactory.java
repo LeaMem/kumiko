@@ -2,6 +2,7 @@ package com.lea.tinyioc.beans.factory;
 
 import com.lea.tinyioc.beans.BeanDefinition;
 import com.lea.tinyioc.beans.BeanPostProcessor;
+import com.lea.tinyioc.test.HelloWorldService;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -25,15 +26,32 @@ public abstract class AbstractBeanFactory implements BeanFactory {
         }
 
         Object bean = beanDefinition.getBean();
+
         if (bean == null) {
+
             bean = doCreateBean(beanDefinition);
+
+            if(bean instanceof HelloWorldService){
+                ((HelloWorldService) bean).helloWorld();
+            }
+
             bean = initializeBean(bean, name);
+
+            if(bean instanceof HelloWorldService){
+                ((HelloWorldService) bean).helloWorld();
+            }
+
+            beanDefinition.setBean(bean);
+
+
         }
 
         return bean;
     }
 
     protected Object initializeBean(Object bean, String name) throws Exception {
+
+
         for (BeanPostProcessor beanPostProcessor : beanPostProcessors) {
             bean = beanPostProcessor.postProcessBeforeInitialization(bean, name);
         }
@@ -41,6 +59,14 @@ public abstract class AbstractBeanFactory implements BeanFactory {
         //todo: initialize method
         for (BeanPostProcessor beanPostProcessor : beanPostProcessors) {
             bean = beanPostProcessor.postProcessAfterInitialization(bean, name);
+
+            //这里好像出现了问题，我不知道怎么解决
+//            System.out.println(bean.getClass());
+//            if (bean instanceof HelloWorldService) {
+//                ((HelloWorldService) bean).helloWorld();
+//                System.out.println("------------ " + bean.getClass() + " ----------");
+//            }
+
         }
 
         return bean;
@@ -61,6 +87,11 @@ public abstract class AbstractBeanFactory implements BeanFactory {
     protected Object doCreateBean(BeanDefinition beanDefinition) throws Exception {
         Object bean = createBeanInstance(beanDefinition);
         beanDefinition.setBean(bean);
+
+//        if(bean instanceof HelloWorldService){
+//            ((HelloWorldService) bean).helloWorld();
+//        }
+
         applyPropertyValues(bean, beanDefinition);
         return bean;
     }

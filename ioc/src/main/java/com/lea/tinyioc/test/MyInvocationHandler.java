@@ -18,6 +18,8 @@ public class MyInvocationHandler implements InvocationHandler {
 
         du.method1();
 
+        System.out.println("kitty");
+
         Object result = method.invoke(target, args);
 
         du.method2();

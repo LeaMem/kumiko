@@ -1,7 +1,7 @@
 package com.lea.tinyioc.aop;
 
 
-import com.lea.tinyioc.HelloWorldService;
+import com.lea.tinyioc.test.HelloWorldService;
 import com.lea.tinyioc.context.ApplicationContext;
 import com.lea.tinyioc.context.ClassPathXmlApplicationContext;
 import org.junit.Test;

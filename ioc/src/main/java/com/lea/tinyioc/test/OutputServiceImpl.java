@@ -1,4 +1,4 @@
-package com.lea.tinyioc;
+package com.lea.tinyioc.test;
 
 public class OutputServiceImpl implements OutputService{
 

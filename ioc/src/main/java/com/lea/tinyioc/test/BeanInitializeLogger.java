@@ -1,4 +1,4 @@
-package com.lea.tinyioc;
+package com.lea.tinyioc.test;
 
 import com.lea.tinyioc.beans.BeanPostProcessor;
 

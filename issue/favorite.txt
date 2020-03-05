@@ -17,6 +17,9 @@ https://github.com/biezhi/java-bible
 
 https://github.com/Wasabi1234/Java-Interview-Tutorial
 
+https://github.com/anton-liauchuk/java-interview
+
+
 ------------------------------
 ## Interesting sites
 

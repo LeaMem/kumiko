@@ -1,7 +1,7 @@
 package com.lea.tinyioc.aop;
 
 
-import com.lea.tinyioc.HelloWorldService;
+import com.lea.tinyioc.test.HelloWorldService;
 import org.junit.Assert;
 import org.junit.Test;
 

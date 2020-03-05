@@ -21,15 +21,13 @@ public class AutowireCapableBeanFactory extends AbstractBeanFactory {
 
         for (PropertyValue propertyValue : mbd.getPropertyValues().getPropertyValues()) {
             Object value = propertyValue.getValue();
-            if (bean instanceof BeanReference) {
+            if (value instanceof BeanReference) {
                 BeanReference beanReference = (BeanReference) value;
                 value = getBean(beanReference.getName());
             }
 
             try {
 
-                System.out.println("set" + propertyValue.getName().substring(0, 1).toUpperCase()
-                        + propertyValue.getName().substring(1));
                 Method declaredMethod = bean.getClass()
                         .getDeclaredMethod("set" + propertyValue.getName().substring(0, 1).toUpperCase()
                                 + propertyValue.getName().substring(1), value.getClass());
