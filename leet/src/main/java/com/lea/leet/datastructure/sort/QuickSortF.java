@@ -57,6 +57,49 @@ public class QuickSortF implements Sort {
 
     }
 
+    public static int partition(int[] arr, int l, int r){
+        int tmp = arr[r];
+
+        for(int i = l; i < r; i++){
+            //放到前面
+            if(tmp > arr[i]){
+                int k = arr[l];
+                arr[l] = arr[i];
+                arr[i] = k;
+                l++;
+            }
+        }
+
+        int k = arr[l];
+        arr[l] = arr[r];
+        arr[r] = k;
+
+        return l;
+    }
+
+//
+//    public static int partition(int[] arr, int start, int end) {
+//
+//        int pivot = arr[end];
+//        for (int i = start; i < end; i++) {
+//
+//            if (arr[i] < pivot) {
+//                int tmp = arr[start];
+//                arr[start] = arr[i];
+//                arr[i] = tmp;
+//                start++;
+//            }
+//
+//        }
+//
+//        int tmp = arr[start];
+//        arr[start] = pivot;
+//        arr[end] = tmp;
+//
+//        return start;
+//
+//    }
+
 
     public static class Record {
 
