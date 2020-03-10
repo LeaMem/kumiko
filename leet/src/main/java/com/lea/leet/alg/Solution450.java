@@ -5,25 +5,29 @@ import com.lea.leet.alg.base.TreeNode;
 public class Solution450 {
 
     public TreeNode deleteNode(TreeNode root, int key) {
+
         if (root == null) {
             return null;
         }
 
-        if (key > root.val) {
-            root.right = deleteNode(root.right, key);
-        } else if (key < root.val) {
+        if (root.val > key) {
             root.left = deleteNode(root.left, key);
+        } else if (root.val < key) {
+            root.right = deleteNode(root.right, key);
         } else {
 
-            //node is a leaf;
+            //左右节点都不存在
             if (root.left == null && root.right == null) {
                 root = null;
-            } else if (root.right != null) {
-                root.val = successor(root);
-                root.right = deleteNode(root.right, root.val);
-            } else {
-                root.val = predecessor(root);
+            } else if (root.left != null) {
+                TreeNode pre = predecessor(root.left);
+                root.val = pre.val;
                 root.left = deleteNode(root.left, root.val);
+            } else {
+                //如果有右节点，找下一个
+                TreeNode next = successor(root.right);
+                root.val = next.val;
+                root.right = deleteNode(root.right, root.val);
             }
 
         }
@@ -31,21 +35,18 @@ public class Solution450 {
         return root;
     }
 
-
-    public int successor(TreeNode root) {
-        root = root.right;
+    public TreeNode successor(TreeNode root) {
         while (root.left != null) {
             root = root.left;
         }
-        return root.val;
+        return root;
     }
 
-    public int predecessor(TreeNode root) {
-        root = root.left;
+    public TreeNode predecessor(TreeNode root) {
         while (root.right != null) {
             root = root.right;
         }
-        return root.val;
+        return root;
     }
 
 }
