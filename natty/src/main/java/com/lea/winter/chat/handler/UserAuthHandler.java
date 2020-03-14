@@ -1,6 +1,5 @@
 package com.lea.winter.chat.handler;
 
-import com.alibaba.fastjson.JSONObject;
 import com.lea.winter.chat.entity.UserInfo;
 import com.lea.winter.chat.proto.ChatCode;
 import com.lea.winter.chat.util.Constants;
@@ -19,22 +18,20 @@ public class UserAuthHandler extends SimpleChannelInboundHandler<Object> {
     private WebSocketServerHandshaker handshaker;
 
 
-
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
 
         log.info("现在是这个线程 [{}]", Thread.currentThread().getName());
 
-        if(msg instanceof FullHttpRequest){
+        if (msg instanceof FullHttpRequest) {
             handleHttpRequest(ctx, (FullHttpRequest) msg);
-        }else if (msg instanceof WebSocketFrame){
+        } else if (msg instanceof WebSocketFrame) {
             handleWebSocket(ctx, (WebSocketFrame) msg);
         }
     }
 
 
-
-    private void handleHttpRequest(ChannelHandlerContext ctx, FullHttpRequest request){
+    private void handleHttpRequest(ChannelHandlerContext ctx, FullHttpRequest request) {
         if (!request.decoderResult().isSuccess() || !"websocket".equals(request.headers().get("Upgrade"))) {
             log.warn("protobuf don't support websocket");
             ctx.channel().close();
@@ -42,12 +39,12 @@ public class UserAuthHandler extends SimpleChannelInboundHandler<Object> {
         }
 
         WebSocketServerHandshakerFactory handshakerFactory = new WebSocketServerHandshakerFactory(
-                Constants.WEBSOCKET_URL, null ,true
+                Constants.WEBSOCKET_URL, null, true
         );
         handshaker = handshakerFactory.newHandshaker(request);
-        if(handshaker == null){
+        if (handshaker == null) {
             WebSocketServerHandshakerFactory.sendUnsupportedVersionResponse(ctx.channel());
-        }else{
+        } else {
             //动态加入 websocket 的编解码处理
             handshaker.handshake(ctx.channel(), request);
             UserInfo userInfo = new UserInfo();
@@ -58,10 +55,10 @@ public class UserAuthHandler extends SimpleChannelInboundHandler<Object> {
     }
 
 
-    private void handleWebSocket(ChannelHandlerContext ctx, WebSocketFrame frame){
+    private void handleWebSocket(ChannelHandlerContext ctx, WebSocketFrame frame) {
 
         //判断是否关闭链路命令
-        if(frame instanceof CloseWebSocketFrame){
+        if (frame instanceof CloseWebSocketFrame) {
             //这是啥意思
             handshaker.close(ctx.channel(), (CloseWebSocketFrame) frame.retain());
             UserInfoManager.removeChannel(ctx.channel());
@@ -69,29 +66,30 @@ public class UserAuthHandler extends SimpleChannelInboundHandler<Object> {
         }
 
         //判断是否是Ping消息
-        if(frame instanceof PingWebSocketFrame){
+        if (frame instanceof PingWebSocketFrame) {
             log.info("ping message: {}", frame.content().retain());
             ctx.writeAndFlush(new PongWebSocketFrame(frame.content().retain()));
-            return ;
+            return;
         }
 
         //判断是否是 Pong 消息
-        if(frame instanceof PongWebSocketFrame){
+        if (frame instanceof PongWebSocketFrame) {
             log.info("pong message: {}", frame.content().retain());
             ctx.writeAndFlush(new PongWebSocketFrame(frame.content().retain()));
-            return ;
+            return;
         }
 
         //本程序目前只支持文本消息
-        if(!(frame instanceof TextWebSocketFrame)){
+        if (!(frame instanceof TextWebSocketFrame)) {
             throw new UnsupportedOperationException(frame.getClass().getName() + " frame type not supported");
         }
 
         String message = ((TextWebSocketFrame) frame).text();
-        JSONObject json = JSONObject.parseObject(message);
-        int code = json.getInteger("code");
+//        JSONObject json = JSONObject.parseObject(message);
+//        int code = json.getInteger("code");
+        int code = 1;
         Channel channel = ctx.channel();
-        switch (code){
+        switch (code) {
             case ChatCode.PING_CODE:
             case ChatCode.PONG_CODE:
                 UserInfoManager.updateUserTime(channel);
@@ -99,9 +97,9 @@ public class UserAuthHandler extends SimpleChannelInboundHandler<Object> {
                 return;
 
             case ChatCode.AUTH_CODE:
-                boolean isSuccess = UserInfoManager.saveUser(channel, json.getString("nick"));
+                boolean isSuccess = UserInfoManager.saveUser(channel, "nick");
                 UserInfoManager.sendInfo(channel, ChatCode.SYS_AUTH_STATE, isSuccess);
-                if(isSuccess){
+                if (isSuccess) {
                     UserInfoManager.broadcastInfo(ChatCode.SYS_USER_COUNT, UserInfoManager.getAuthUserCount());
                 }
                 return;

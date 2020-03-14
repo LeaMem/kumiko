@@ -16,3 +16,5 @@ dubbo:
 
   metadata-report:
     address: zookeeper://192.168.40.13:2181
+  protocol:
+    port: 9992

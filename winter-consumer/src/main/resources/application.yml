@@ -8,5 +8,9 @@ dubbo:
     check: false
   consumer:
     check: false
+
+  metadata-report:
+    address: zookeeper://192.168.40.13:2181
+
 server:
   port: 9999

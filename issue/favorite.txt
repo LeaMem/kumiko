@@ -18,6 +18,9 @@ https://github.com/biezhi/java-bible
 https://github.com/Wasabi1234/Java-Interview-Tutorial
 
 https://github.com/anton-liauchuk/java-interview
+https://github.com/apachecn/Interview
+
+https://github.com/yangshun/tech-interview-handbook
 
 
 ------------------------------
@@ -45,6 +48,11 @@ https://github.com/lengyue1024/linux-command
 ### 数据结构/算法
 
 https://www.cxyxiaowu.com/
+
+
+### 设计模式
+
+https://refactoringguru.cn/design-patterns/abstract-factory
 
 
 
@@ -85,3 +93,9 @@ lsof
 ps
 top
 du -sh
+
+dubbo:
+       1. 怎么动态分组
+       2. SPI
+
+http://dubbo.apache.org/zh-cn/blog/dubbo-annotation.html

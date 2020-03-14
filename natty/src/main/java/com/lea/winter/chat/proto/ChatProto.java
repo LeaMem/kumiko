@@ -1,6 +1,5 @@
 package com.lea.winter.chat.proto;
 
-import com.alibaba.fastjson.JSONObject;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -42,14 +41,16 @@ public class ChatProto {
         chatProto.extend.put("uid", uid);
         chatProto.extend.put("nick", nick);
         chatProto.extend.put("time", getTime());
-        return JSONObject.toJSONString(chatProto);
+//        return JSONObject.toJSONString(chatProto);
+        return chatProto.toString();
     }
 
     public static String buildSysProto(int code, Object mess){
         ChatProto chatProto = new ChatProto(SYST_PROTO, null);
         chatProto.extend.put("code", code);
         chatProto.extend.put("mess", mess);
-        return JSONObject.toJSONString(chatProto);
+//        return JSONObject.toJSONString(chatProto);
+        return chatProto.toString();
     }
 
 
@@ -59,7 +60,8 @@ public class ChatProto {
 
     public static String buildProto(int head, String body){
         ChatProto chatProto = new ChatProto(head, body);
-        return JSONObject.toJSONString(chatProto);
+//        return JSONObject.toJSONString(chatProto);
+        return chatProto.toString();
     }
 
     public static final String getTime(){

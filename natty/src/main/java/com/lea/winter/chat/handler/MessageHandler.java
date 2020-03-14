@@ -1,6 +1,5 @@
 package com.lea.winter.chat.handler;
 
-import com.alibaba.fastjson.JSONObject;
 import com.lea.winter.chat.entity.UserInfo;
 import com.lea.winter.chat.proto.ChatCode;
 import io.netty.channel.ChannelHandlerContext;
@@ -18,10 +17,10 @@ public class MessageHandler extends SimpleChannelInboundHandler<TextWebSocketFra
 
         UserInfo userInfo = UserInfoManager.getUserInfo(ctx.channel());
         if(userInfo != null && userInfo.isAuth()){
-            JSONObject json = JSONObject.parseObject(msg.text());
+
 
             //广播返回用户发送的消息文本
-            UserInfoManager.broadcastMess(userInfo.getUserId(), userInfo.getNick(), json.getString("mess"));
+//            UserInfoManager.broadcastMess(userInfo.getUserId(), userInfo.getNick(), json.getString("mess"));
         }
     }
 

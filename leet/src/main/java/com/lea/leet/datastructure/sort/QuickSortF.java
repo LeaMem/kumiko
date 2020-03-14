@@ -57,6 +57,18 @@ public class QuickSortF implements Sort {
 
     }
 
+    public static void main(String[] args) {
+
+        int[] A = new int[]{5, 2, 4, 6, 1, 3};
+        int partition = new QuickSortF().partition(A, 0, A.length - 1);
+        System.out.println(partition);
+
+        for (int it : A) {
+            System.out.println(it);
+        }
+
+    }
+
     public static int partition(int[] arr, int l, int r){
         int tmp = arr[r];
 
@@ -113,14 +125,5 @@ public class QuickSortF implements Sort {
         }
     }
 
-    public static void main(String[] args) {
 
-        int[] A = new int[]{5, 2, 4, 6, 1, 3};
-        new QuickSortF().sort(A);
-
-        for (int it : A) {
-            System.out.println(it);
-        }
-
-    }
 }
