@@ -1,33 +1,51 @@
 package com.lea.leet.alg;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Solution15 {
 
-//    public List<List<Integer>> threeSum(int[] nums) {
-//
-//        Set<Integer> params = Arrays
-//                .stream(nums)
-//                .boxed()
-//                .collect(Collectors.toSet());
-//
-//
-//
-//    }
+    public List<List<Integer>> threeSum(int[] nums) {
 
-//    public Set<Integer> findRest(Set<Integer> params, int x) {
-//        Map<Integer, Integer> result = new HashMap<>();
-//
-//        for (Integer y : params) {
-//            int z = x - y;
-//            if (!result.containsKey(z)) {
-//                result.put(z, y);
-//            } else {
-//                if(x != )
-//                return new HashSet<>(Arrays.asList(y, result.get(y)));
-//            }
-//        }
-//    }
+        List<List<Integer>> result = new ArrayList<>();
+
+        Arrays.sort(nums);
+
+        for (int k = 0; k < nums.length; k++) {
+
+            int i = k + 1;
+            int j = nums.length - 1;
+
+            while (i < j && i < nums.length - 1) {
+
+                int sum = nums[k] + nums[i] + nums[j];
+                if (sum < 0) {
+                    i++;
+                } else if (sum > 0) {
+                    j--;
+                } else {
+                    result.add(Arrays.asList(nums[k], nums[i], nums[j]));
+                    i++;
+                    j--;
+                    while (i < j && nums[i] == nums[i - 1]) {
+                        i++;
+                    }
+                    while (i < j && nums[j] == nums[j + 1]) {
+                        j--;
+                    }
+                }
+            }
+
+        }
+        return result;
+    }
+
+    public static void main(String[] args) {
+
+        int[] nums = new int[]{-1, 0, 1, 2, -1, -4};
+        Solution15 solution15 = new Solution15();
+        List<List<Integer>> lists = solution15.threeSum(nums);
+        System.out.println(lists.size());
+
+    }
 
 }
