@@ -15,13 +15,23 @@ public class Solution15 {
             int i = k + 1;
             int j = nums.length - 1;
 
+            if(k > 0 && nums[k] == nums[k - 1]){
+                continue;
+            }
+
             while (i < j && i < nums.length - 1) {
 
                 int sum = nums[k] + nums[i] + nums[j];
                 if (sum < 0) {
                     i++;
+                    while (i < j && nums[i] == nums[i - 1]) {
+                        i++;
+                    }
                 } else if (sum > 0) {
                     j--;
+                    while (i < j && nums[j] == nums[j + 1]) {
+                        j--;
+                    }
                 } else {
                     result.add(Arrays.asList(nums[k], nums[i], nums[j]));
                     i++;
