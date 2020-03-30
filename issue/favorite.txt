@@ -10,6 +10,9 @@ https://github.com/CyC2018/CS-Notes
 https://github.com/xbox1994/Java-Interview
 https://github.com/gzc426/Java-Interview
 https://github.com/lengyue1024/BAT_interviews
+https://github.com/kdn251/interviews/blob/master/README-zh-cn.md
+
+https://github.com/doocs/advanced-java
 
 https://github.com/Snailclimb/JavaGuide
 
