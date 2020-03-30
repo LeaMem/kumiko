@@ -3,6 +3,16 @@ package com.lea.leet.datastructure.tree;
 /**
  * https://www.bilibili.com/video/BV17J411P7aJ?p=4
  *
+ * 节点删除
+ * https://segmentfault.com/a/1190000012115424
+ *
+ *
+ * https://segmentfault.com/a/1190000018248335
+ *
+ * https://segmentfault.com/a/1190000012728513
+ *
+ * https://segmentfault.com/a/1190000020118044
+ *
  * @param <T>
  */
 public class RBTree<T extends Comparable<T>> {
@@ -230,6 +240,34 @@ public class RBTree<T extends Comparable<T>> {
     }
 
 
+    /**
+     *      红黑树删除修正函数
+     *      在从红黑树中删除节点之后 (红黑树失去平衡), 再调用该函数
+     *      目的为了重塑成一颗红黑树
+     * @param node
+     * @param parent
+     */
+    public void removeFixUp(RBTNode<T> node, RBTNode<T> parent){
+
+        RBTNode<T> other;
+
+        //这是失黑修正吗
+        while((node == null || isBlack(node)) && node != this.mRoot){
+            if(parent.left == node){
+                other = parent.right;
+                if(isRed(other)){
+                    //case1: x的兄弟w是红色的
+                    setBlack(other);
+                    setRed(parent);
+                    leftRotate(parent);
+                    other = parent.right;
+                }
+            }
+        }
+    }
+
+
+
     public static class RBTNode<T extends Comparable<T>> {
         //颜色
         boolean color;
@@ -258,6 +296,7 @@ public class RBTree<T extends Comparable<T>> {
             return key;
         }
 
+        @Override
         public String toString() {
             return "" + key + (this.color == RED ? "(R)" : "B");
         }
