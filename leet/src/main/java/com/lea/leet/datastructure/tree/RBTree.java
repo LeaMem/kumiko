@@ -1,27 +1,27 @@
 package com.lea.leet.datastructure.tree;
 
+
 /**
  * https://www.bilibili.com/video/BV17J411P7aJ?p=4
- *
+ * <p>
  * 节点删除
  * https://segmentfault.com/a/1190000012115424
- *
- *
+ * <p>
+ * <p>
  * https://segmentfault.com/a/1190000018248335
- *
+ * <p>
  * https://segmentfault.com/a/1190000012728513
- *
+ * <p>
  * https://segmentfault.com/a/1190000020118044
  *
  * @param <T>
  */
 public class RBTree<T extends Comparable<T>> {
 
-    private static final boolean RED = false;
-
-    private static final boolean BLACK = true;
-
     private RBTNode<T> mRoot;
+
+    private static final boolean RED = false;
+    private static final boolean BLACK = true;
 
     public RBTree() {
         this.mRoot = null;
@@ -67,72 +67,140 @@ public class RBTree<T extends Comparable<T>> {
         }
     }
 
-    //对红黑树节点x进行左旋
+    /**
+     * 查找最小节点
+     */
+    private RBTNode<T> minimum(RBTNode<T> tree) {
+        if (tree == null) {
+            return null;
+        }
+        while (tree.left != null) {
+            tree = tree.left;
+        }
+        return tree;
+    }
+
+    /**
+     * 查找最大节点
+     */
+    private RBTNode<T> maximum(RBTNode<T> tree) {
+        if (tree == null) {
+            return null;
+        }
+        while (tree.right != null) {
+            tree = tree.right;
+        }
+        return tree;
+    }
+
+    /**
+     * 查找 x 的前驱节点
+     */
+    public RBTNode<T> predecessor(RBTNode<T> x) {
+        //如果 x 存在左节点，就是左节点的最大值
+        if (x.left != null) {
+            return maximum(x.left);
+        }
+        RBTNode<T> y = x.parent;
+        while (y != null && y.left == x) {
+            x = y;
+            y = x.parent;
+        }
+        return y;
+    }
+
+    /**
+     * 查找 x 的后继节点
+     */
+    public RBTNode<T> successor(RBTNode<T> x) {
+
+        if (x.right != null) {
+            return minimum(x.right);
+        }
+
+        RBTNode<T> y = x.parent;
+        while (y != null && y.right == x) {
+            x = y;
+            y = x.parent;
+        }
+        return y;
+    }
+
+    /**
+     * 左旋，不涉及到颜色
+     *
+     * @param x
+     */
     private void leftRotate(RBTNode<T> x) {
+
         RBTNode<T> y = x.right;
+
         x.right = y.left;
+        //这里要判断非空
         if (y.left != null) {
             y.left.parent = x;
         }
 
-        //将y.parent 设置为x的parent
         y.parent = x.parent;
-
         if (x.parent == null) {
             this.mRoot = y;
         } else {
             if (x.parent.left == x) {
                 x.parent.left = y;
             } else {
-                x.parent.right = y;
+                x.parent.right = x;
             }
         }
 
+        //设置x
         y.left = x;
         x.parent = y;
     }
 
-    //右旋
     private void rightRotate(RBTNode<T> y) {
+
         RBTNode<T> x = y.left;
+
         y.left = x.right;
         if (x.right != null) {
             x.right.parent = y;
         }
-        x.parent = y.parent;
 
+        //这是parent
         if (y.parent == null) {
-            this.mRoot = x;
+            this.mRoot = y;
         } else {
-            if (y == y.parent.left) {
+            if (y.parent.left == y) {
                 y.parent.left = x;
             } else {
                 y.parent.right = x;
             }
         }
+
+        //这是x
         x.right = y;
         y.parent = x;
+
     }
 
     /**
      * 红黑树插入修正函数
-     * 在向红黑树中插入节点之后 (失去平衡) 再调用该函数
-     *
-     * @param node
+     * 双红修正
      */
-    private void insertFixUp(RBTNode<T> node) {
+    private void insertFixUP(RBTNode<T> node) {
         RBTNode<T> parent, gparent;
-        /**
-         *      双红修正
-         */
+
+        //如果父节点存在且父节点的颜色是红色
         while ((parent = parentOf(node)) != null && isRed(parent)) {
+
+            //如果是双红冲突，祖父节点一定存在，因为 root 节点一定是黑色
             gparent = parentOf(parent);
 
-            //若父节点是祖父节点的左孩子
-            if (parent == parent.left) {
+            //如果父节点是祖父节点的左孩子
+            if (parent == gparent.left) {
 
                 RBTNode<T> uncle = gparent.right;
-                //case 1 : 叔叔节点是红
+                //case 1 : 叔叔节点是红色
                 if (uncle != null && isRed(uncle)) {
                     setBlack(uncle);
                     setBlack(parent);
@@ -141,7 +209,7 @@ public class RBTree<T extends Comparable<T>> {
                     continue;
                 }
 
-                //case 2: 叔叔是黑色，且当前节点是右孩子 [三角形]
+                //case2: 叔叔节点是黑色，且当前节点是右孩子
                 if (parent.right == node) {
                     RBTNode<T> tmp;
                     leftRotate(parent);
@@ -150,56 +218,49 @@ public class RBTree<T extends Comparable<T>> {
                     node = tmp;
                 }
 
-                //case 3条件: 叔叔是黑色，且当前节点是左孩子 [line]
+                //case3: 叔叔节点是黑色，且当前节点是左孩子
+                // 这个旋转就结束了
                 setBlack(parent);
                 setRed(gparent);
                 rightRotate(gparent);
             } else {
 
-                //右节点
                 RBTNode<T> uncle = gparent.left;
 
-                //case 1: 叔叔是红色
+                //case1: 叔叔节点是红色
                 if (uncle != null && isRed(uncle)) {
-                    setBlack(parent);
                     setBlack(uncle);
+                    setBlack(parent);
                     setRed(gparent);
                     node = gparent;
                     continue;
                 }
 
-                //case2: 叔叔是黑色，当前节点是左孩子 [三角形]
+                //case2: 叔叔节点是黑色，且当前节点是左孩子
                 if (parent.left == node) {
+                    RBTNode<T> tmp;
                     rightRotate(parent);
-                    RBTNode<T> tmp = parent;
+                    tmp = parent;
                     parent = node;
                     node = tmp;
                 }
 
-                //case 3:  [直线]
+                //case3: 叔叔是黑色，且当前节点是右孩子
                 setBlack(parent);
                 setRed(gparent);
                 leftRotate(gparent);
             }
         }
 
-        //将根节点设置为黑色
-        //第一次插入的时候
         setBlack(this.mRoot);
     }
 
 
-    /**
-     * 将节点插入到红黑树中
-     *
-     * @param node
-     */
     private void insert(RBTNode<T> node) {
         int cmp;
+
         RBTNode<T> y = null;
         RBTNode<T> x = this.mRoot;
-
-        //1. 将红黑树当做一颗二叉查找树,将节点添加到二叉查找树中
         while (x != null) {
             y = x;
             cmp = node.key.compareTo(x.key);
@@ -210,7 +271,6 @@ public class RBTree<T extends Comparable<T>> {
             }
         }
 
-        //双向绑定
         node.parent = y;
         if (y != null) {
             cmp = node.key.compareTo(y.key);
@@ -220,51 +280,24 @@ public class RBTree<T extends Comparable<T>> {
                 y.right = node;
             }
         } else {
+
+            //维护根节点
             this.mRoot = node;
         }
 
-        //2.将节点颜色设置为红色
+        //设置节点的颜色是红色
         node.color = RED;
 
-        //双红修正
-        insertFixUp(node);
+        //将它重新修正为一颗红黑树
+        insertFixUP(node);
     }
 
-    /**
-     *      节点插入
-     * @param key
-     */
     public void insert(T key) {
         RBTNode<T> node = new RBTNode<>(key, BLACK, null, null, null);
         insert(node);
     }
 
 
-    /**
-     *      红黑树删除修正函数
-     *      在从红黑树中删除节点之后 (红黑树失去平衡), 再调用该函数
-     *      目的为了重塑成一颗红黑树
-     * @param node
-     * @param parent
-     */
-    public void removeFixUp(RBTNode<T> node, RBTNode<T> parent){
-
-        RBTNode<T> other;
-
-        //这是失黑修正吗
-        while((node == null || isBlack(node)) && node != this.mRoot){
-            if(parent.left == node){
-                other = parent.right;
-                if(isRed(other)){
-                    //case1: x的兄弟w是红色的
-                    setBlack(other);
-                    setRed(parent);
-                    leftRotate(parent);
-                    other = parent.right;
-                }
-            }
-        }
-    }
 
 
 
