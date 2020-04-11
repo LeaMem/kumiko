@@ -3,6 +3,11 @@ package com.lea.leet.alg;
 import com.lea.leet.alg.base.ListNode;
 
 
+/**
+ *      链表排序
+ *      还没过多久就忘了
+ *      这个快排以后二刷的时候搞了
+ */
 public class Solution148 {
 
     public ListNode sortList(ListNode head) {
@@ -25,32 +30,38 @@ public class Solution148 {
                     second = second.next;
                 }
 
-                int f = 0, s = 0;
+                int f = 0;
+                int s = 0;
+
                 while (f < i && s < i && second != null) {
+
+                    //用first
                     if (first.val < second.val) {
+
                         tmp.next = first;
-                        tmp = tmp.next;
                         first = first.next;
                         f++;
+                        tmp = tmp.next;
+
                     } else {
                         tmp.next = second;
-                        tmp = tmp.next;
                         second = second.next;
+                        tmp = tmp.next;
                         s++;
                     }
                 }
 
                 while (f < i) {
                     tmp.next = first;
-                    tmp = tmp.next;
                     first = first.next;
+                    tmp = tmp.next;
                     f++;
                 }
 
                 while (s < i && second != null) {
                     tmp.next = second;
-                    tmp = tmp.next;
                     second = second.next;
+                    tmp = tmp.next;
                     s++;
                 }
 
@@ -58,21 +69,18 @@ public class Solution148 {
 
             }
 
-
         }
 
         return dummy.next;
+
     }
 
 
     public int length(ListNode root) {
         int n = 0;
-        if (root == null) {
-            return 0;
-        }
         while (root != null) {
-            root = root.next;
             n++;
+            root = root.next;
         }
         return n;
     }
