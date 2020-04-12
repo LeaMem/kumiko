@@ -1,6 +1,8 @@
 package com.lea.leet.datastructure.tree;
 
 
+import javafx.scene.Parent;
+
 /**
  * https://www.bilibili.com/video/BV17J411P7aJ?p=4
  * <p>
@@ -298,7 +300,149 @@ public class RBTree<T extends Comparable<T>> {
     }
 
 
+    /**
+     * 红黑树删除修正函数
+     * <p>
+     * 在从红黑树中删除插入节点之后（红黑树失去平衡）,再调用该函数
+     * 目的是将它重塑成一颗红黑树
+     *
+     * @param node
+     * @param parent
+     */
+    private void removeFixUp(RBTNode<T> node, RBTNode<T> parent) {
+        RBTNode<T> other;
+        while ((node == null || isBlack(node)) && (node != this.mRoot)) {
+            if (parent.left == node) {
+                other = parent.right;
 
+                if (isRed(other)) {
+                    //case 1: x 的兄弟 w 是红色的
+                    setBlack(other);
+                    setRed(parent);
+                    leftRotate(parent);
+                    other = parent.right;
+                }
+
+                if ((other.left == null || isBlack(other.left)) &&
+                        (other.right == null || isBlack(other.right))) {
+
+                    //case2 : x的兄弟节点是黑色，并且w的两个孩子也是黑色的
+                    setRed(other);
+                    node = parent;
+                    parent = parentOf(node);
+
+                } else {
+
+                    if (other.right == null || isBlack(other.right)) {
+                        //case3 : x的兄弟节点是黑色的，并且w的左孩子是红色，右孩子是黑色
+                        setBlack(other.left);
+                        setRed(other);
+                        rightRotate(other);
+                        other = parent.right;
+                    }
+
+                    //case4: x的兄弟节点是黑色的，并且w的右孩子是红色，左孩子任意颜色
+                    setColor(other, colorOf(parent));
+                    setBlack(parent);
+                    setBlack(other.right);
+                    leftRotate(parent);
+                    node = this.mRoot;
+                    break;
+                }
+
+            } else {
+                other = parent.left;
+
+                if (isRed(other)) {
+
+                    //case 1 x的兄弟节点是红色
+                    setBlack(other);
+                    setRed(parent);
+                    rightRotate(parent);
+                    other = parent.left;
+                }
+
+                if ((other.left == null || isBlack(other.left)) &&
+                        (other.right == null || isBlack(other.right))) {
+
+                    //case2: x的兄弟节点是黑色，且w的两个孩子都是黑色的
+                    setRed(other);
+                    node = parent;
+                    parent = parentOf(node);
+
+                } else {
+                    if (other.left == null || isBlack(other.left)) {
+
+                        //case3: x 的兄弟节点 w 是黑色，并且w的左节点是红色
+                        setBlack(other.right);
+                        setRed(other);
+                        leftRotate(other);
+                        other = parent.left;
+                    }
+
+                    //case4: x的兄弟节点w是黑色，并且 w 的右孩子是红色的，左孩子任意颜色
+                    setColor(other, colorOf(parent));
+                    setBlack(parent);
+                    setBlack(other.left);
+                    rightRotate(parent);
+                    node = this.mRoot;
+                    break;
+                }
+            }
+        }
+
+        if (node != null) {
+            setBlack(node);
+        }
+    }
+
+    private void remove(RBTNode<T> node) {
+
+        RBTNode<T> child, parent;
+        boolean color;
+
+        //被删除的节点左右孩子都不为空
+        if (node.left != null && node.right != null) {
+            //被删节点的后继节点，
+            RBTNode<T> replace = node;
+
+            //获取后继节点
+            replace = replace.right;
+            while (replace.left != null) {
+                replace = replace.left;
+            }
+
+            if (parentOf(node) != null) {
+                if (parentOf(node).left == node) {
+                    parentOf(node).left = replace;
+                } else {
+                    parentOf(node).right = replace;
+                }
+            } else {
+                this.mRoot = replace;
+            }
+
+            //child 是取代节点的右孩子，也是需要调整的节点
+            // 取代节点肯定不存在左孩子，因为它是一个后继节点
+            child = replace.right;
+            parent = parentOf(replace);
+            //保存取代节点的颜色
+            color = colorOf(replace);
+
+            ///被删除节点 是 它后继节点的父节点
+            if (parent == node) {
+                parent = replace;
+            } else {
+                //child不为空
+                if (child != null) {
+                    setParent(child, parent);
+                }
+                parent.left = child;
+                replace.right = node.right;
+                setParent(node.right, replace);
+            }
+        }
+    }
 
 
     public static class RBTNode<T extends Comparable<T>> {
