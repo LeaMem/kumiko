@@ -84,7 +84,9 @@ public class RedBlackTree<K, V> {
         //开始修复代替节点
         Entry<K, V> replacement = (p.left != null ? p.left : p.right);
 
+        if(replacement != null){
 
+        }
 
     }
 
