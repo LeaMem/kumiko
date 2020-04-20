@@ -2,53 +2,33 @@ package com.lea.leet.alg;
 
 import com.lea.leet.alg.base.TreeNode;
 
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.TreeSet;
 
 public class Solution988 {
 
+    TreeSet<String> treeSet = new TreeSet<>();
+
     public String smallestFromLeaf(TreeNode root) {
-        return null;
-    }
 
-
-    public static void main(String[] args) throws InterruptedException {
-
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-
-                while(true){
-
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        Thread.interrupted();
-                        System.out.println("我被中断了");
-                        break;
-                    }
-
-                }
-
-            }
-
-        };
-
-        ExecutorService executorService = Executors.newCachedThreadPool();
-        executorService.submit(runnable);
-
-
-        executorService.shutdownNow();
-
-        while(!executorService.isTerminated()){
-            System.out.println("未关闭");
+        if (root == null) {
+            return "";
         }
 
-        System.out.println(executorService.isTerminated());
-
-        Thread.currentThread().join();
-
+        dfs(root, "");
+        return treeSet.first();
     }
 
+    public void dfs(TreeNode root, String last) {
+        if (root == null) {
+            return;
+        }
+
+        last = (char) (root.val + 'a') + last;
+        if (root.left == null && root.right == null) {
+            treeSet.add(last);
+        }
+
+        dfs(root.left, last);
+        dfs(root.right, last);
+    }
 }

@@ -18,12 +18,31 @@ public class Solution1003 {
 
     public boolean isValid(String S) {
 
-        return false;
+        char[] chars = S.toCharArray();
+        char[] stack = new char[S.length()];
+
+        int index = 0;
+        for (int i = 0; i < S.length(); i++) {
+            if (chars[i] != 'c') {
+                stack[index++] = chars[i];
+            } else {
+                if (index <= 1) {
+                    return false;
+                }
+                if (stack[index - 1] == 'b' && stack[index - 2] == 'a') {
+                    index -= 2;
+                }
+            }
+        }
+
+        return index == 0;
     }
 
     public static void main(String[] args) {
-        StringBuilder builder = new StringBuilder("");
-        System.out.println(builder.length());
+        String str = "abccba";
+        Solution1003 solution1003 = new Solution1003();
+        boolean bool = solution1003.isValid(str);
+        System.out.println(bool);
     }
 
 }

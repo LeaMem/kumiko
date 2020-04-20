@@ -18,7 +18,6 @@
 
     <bean id="timeInterceptor" class="com.lea.tinyioc.aop.TimerInterceptor"></bean>
 
-    <bean id="autoProxyCreator" class="com.lea.tinyioc.aop.AspectJAwareAdvisorAutoProxyCreator"></bean>
 
     <bean id="aspectjAspect" class="com.lea.tinyioc.aop.AspectJExpressionPointcutAdvisor">
         <property name="advice" ref="timeInterceptor"></property>
