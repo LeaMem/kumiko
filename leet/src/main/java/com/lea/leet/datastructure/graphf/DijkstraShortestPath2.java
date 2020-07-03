@@ -16,7 +16,7 @@ public class DijkstraShortestPath2 {
         while (!pq.isEmpty()) {
             Node t = pq.poll();
 
-            //如果是重点
+            //如果是终点
             if (t.node == dst) {
                 return t.cost;
             }
