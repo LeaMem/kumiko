@@ -1,13 +1,13 @@
 dubbo:
   registry:
-    address: zookeeper://192.168.40.13:2181
+    address: zookeeper://localhost:2181
     username: leamem
     password: WhiteWinter
     simplified: true
   application:
     name: winter-provider
   config-center:
-    address: zookeeper://192.168.40.13:2181
+    address: zookeeper://localhost:2181
 
 #    注册中心
     username: leamem
@@ -15,6 +15,6 @@ dubbo:
 
 
   metadata-report:
-    address: zookeeper://192.168.40.13:2181
+    address: zookeeper://localhost:2181
   protocol:
     port: 9992
