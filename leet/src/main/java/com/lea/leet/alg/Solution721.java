@@ -29,36 +29,38 @@ public class Solution721 {
         for (String mail : map.keySet()) {
             List<Integer> list = map.get(mail);
             for (Integer integer : list) {
-                int root0 = find(parent, list.get(0));
                 int rootI = find(parent, integer);
+                int root0 = find(parent, list.get(0));
                 if (root0 != rootI) {
                     parent[rootI] = root0;
                 }
             }
         }
 
+        Map<Integer, Set<String>> ansMap = new HashMap<>();
 
-        Map<String, Set<String>> ansMap = new HashMap<>();
+        for (int i = 0; i < accounts.size(); i++) {
 
-        for (int i = 0; i < accounts.size(); i++){
-            int root = parent[i];
-            String name = accounts.get(root).get(0);
-            for(int j = 1; j < accounts.get(j).size(); j++){
-                String mail = accounts.get(j).get(j);
-                Set<String> set = ansMap.getOrDefault(name, new TreeSet<>());
+            //这里是精华
+            int root = find(parent, i);
+            for (int j = 1; j < accounts.get(i).size(); j++) {
+                String mail = accounts.get(i).get(j);
+                Set<String> set = ansMap.getOrDefault(root, new TreeSet<>());
                 set.add(mail);
-                ansMap.put(name, set);
+                ansMap.put(root, set);
             }
+
         }
 
         List<List<String>> list = new ArrayList<>();
-        for(String name : ansMap.keySet()){
+        for (Integer root : ansMap.keySet()) {
             List<String> accountList = new ArrayList<>();
-            Set<String> mailTreeSet = ansMap.get(name);
+            String name = accounts.get(root).get(0);
             accountList.add(name);
-            accountList.addAll(mailTreeSet);
+            accountList.addAll(ansMap.get(root));
             list.add(accountList);
         }
+
 
         return list;
     }
@@ -74,12 +76,11 @@ public class Solution721 {
     public static void main(String[] args) {
 
         List<List<String>> accounts = Arrays.asList(
-
-                Arrays.asList("John", "johnsmith@mail.com", "john00@mail.com"),
-                Arrays.asList("John", "johnnybravo@mail.com"),
-                Arrays.asList("John", "johnsmith@mail.com", "john_newyork@mail.com"),
-                Arrays.asList("Mary", "mary@mail.com")
-
+                Arrays.asList("David", "David0@m.co", "David1@m.co"),
+                Arrays.asList("David", "David3@m.co", "David4@m.co"),
+                Arrays.asList("David", "David4@m.co", "David5@m.co"),
+                Arrays.asList("David", "David2@m.co", "David3@m.co"),
+                Arrays.asList("David", "David1@m.co", "David2@m.co")
         );
 
         Solution721 solution721 = new Solution721();

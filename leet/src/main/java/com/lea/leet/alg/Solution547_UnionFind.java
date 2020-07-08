@@ -64,10 +64,11 @@ public class Solution547_UnionFind {
 
     public static void main(String[] args) {
 
-        UF uf = new UF(4);
-        uf.union(0, 3);
-        uf.union(1, 2);
-        uf.union(2, 3);
+        UF uf = new UF(5);
+        uf.union(0, 4);
+        uf.union(3, 4);
+        uf.union(1, 3);
+        uf.union(1,2);
 
         System.out.println(uf.size());
 
