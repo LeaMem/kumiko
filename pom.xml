@@ -16,6 +16,7 @@
         <module>juc</module>
         <module>leet</module>
         <module>ioc</module>
+        <module>midware</module>
     </modules>
 
     <properties>
