@@ -1,0 +1,21 @@
+spring:
+  kafka:
+    bootstrap-servers: 172.20.13.97:9092
+    template:
+      default-topic: dev_msg_detect_result_1
+
+    listener:
+      concurrency: 3
+
+    producer:
+      batch-size: 10
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+
+    consumer:
+      group-id: test_consumer
+      auto-offset-reset: latest
+      key-deserializer: org.apache.kafka.common.serialization.StringSerializer
+      value-deserializer: org.apache.kafka.common.serialization.StringSerializer
+      enable-auto-commit: true
