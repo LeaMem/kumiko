@@ -1,4 +1,4 @@
-package com.lea.kumiko.bean;
+package com.lea.kumiko.midware.bean;
 
 import lombok.Data;
 

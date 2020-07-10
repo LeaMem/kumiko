@@ -19,3 +19,6 @@ spring:
       key-deserializer: org.apache.kafka.common.serialization.StringSerializer
       value-deserializer: org.apache.kafka.common.serialization.StringSerializer
       enable-auto-commit: true
+server:
+  servlet:
+    context-path: /midware
