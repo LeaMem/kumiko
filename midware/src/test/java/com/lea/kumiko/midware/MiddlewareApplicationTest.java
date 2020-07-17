@@ -15,6 +15,9 @@ import org.springframework.util.concurrent.ListenableFutureCallback;
 
 import java.util.concurrent.TimeUnit;
 
+/**
+ *      1. Spring 源码 https://github.com/seaswalker/spring-analysis
+ */
 @SpringBootTest
 @RunWith(SpringRunner.class)
 public class MiddlewareApplicationTest {
