@@ -27,7 +27,7 @@ public class JDBCTest {
 
         //Step 1: register jdbc driver
 //        Class.forName("com.mysql.cj.jdbc.Driver");
-//        DriverManager.registerDriver(new Driver());
+        DriverManager.registerDriver(new Driver());
         Enumeration<java.sql.Driver> drivers = DriverManager.getDrivers();
 
 
