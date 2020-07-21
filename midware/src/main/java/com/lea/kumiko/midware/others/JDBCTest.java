@@ -2,6 +2,8 @@ package com.lea.kumiko.midware.others;
 
 import com.mysql.cj.jdbc.Driver;
 
+import java.io.BufferedWriter;
+import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.sql.*;
@@ -27,7 +29,8 @@ public class JDBCTest {
 
         //Step 1: register jdbc driver
 //        Class.forName("com.mysql.cj.jdbc.Driver");
-        DriverManager.registerDriver(new Driver());
+//        DriverManager.registerDriver(new Driver());
+//        DriverManager.setLogWriter(new PrintWriter(System.out, true));
         Enumeration<java.sql.Driver> drivers = DriverManager.getDrivers();
 
 
