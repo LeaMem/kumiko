@@ -5,7 +5,7 @@ import com.lea.leet.alg.base.TreeNode;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Solution655 {
+public class Solution655_leftRightRange {
 
     public List<List<String>> printTree(TreeNode root) {
 
@@ -49,7 +49,7 @@ public class Solution655 {
 
     public static void main(String[] args) {
 
-        Solution655 solution655 = new Solution655();
+        Solution655_leftRightRange solution655LeftRightRange = new Solution655_leftRightRange();
         TreeNode root = new TreeNode(5);
         root.left = new TreeNode(3);
         root.right = new TreeNode(6);
@@ -57,7 +57,7 @@ public class Solution655 {
         root.left.right = new TreeNode(4);
         root.right.right = new TreeNode(7);
 
-        List<List<String>> lists = solution655.printTree(root);
+        List<List<String>> lists = solution655LeftRightRange.printTree(root);
         for (List<String> list : lists) {
             String collect = String.join(",", list);
             System.out.println(collect);
