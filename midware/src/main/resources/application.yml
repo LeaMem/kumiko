@@ -19,6 +19,14 @@ spring:
       key-deserializer: org.apache.kafka.common.serialization.StringSerializer
       value-deserializer: org.apache.kafka.common.serialization.StringSerializer
       enable-auto-commit: true
+  datasource:
+    url: jdbc:mysql://leamem.tpddns.cn:3306/test?autoReconnect=true&autoCommit=false&useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8
+    username: root
+    password: CUIjin9874123?
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      pool-name: WeCantStudyTogether
+      connection-test-query: select 1
 server:
   servlet:
     context-path: /midware
