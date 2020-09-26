@@ -19,6 +19,7 @@ spring:
       key-deserializer: org.apache.kafka.common.serialization.StringSerializer
       value-deserializer: org.apache.kafka.common.serialization.StringSerializer
       enable-auto-commit: true
+
   datasource:
     url: jdbc:mysql://leamem.tpddns.cn:3306/test?autoReconnect=true&autoCommit=false&useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8
     username: root
@@ -27,6 +28,28 @@ spring:
     hikari:
       pool-name: WeCantStudyTogether
       connection-test-query: select 1
+
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+  mvc:
+    date-format: yyyy-MM-dd HH:mm:ss
+
 server:
   servlet:
     context-path: /midware
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+    default-statement-timeout: 30
+  mapper-locations: classpath*:mapper/*.xml
+  type-aliases-package: com.lea.kumiko.midware.entity
+
+
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
