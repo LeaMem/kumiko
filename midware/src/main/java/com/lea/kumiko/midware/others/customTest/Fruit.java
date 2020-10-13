@@ -6,12 +6,14 @@ import java.util.List;
 
 public class Fruit {
 
+    private String name;
+
 	public static class Apple extends Fruit {
 
 	}
 
 	public static class Orange extends Fruit {
-
+	    private Integer size;
 	}
 
 	public static class Plate<T> {
@@ -33,7 +35,10 @@ public class Fruit {
 
 	public static void main(String[] args) throws NoSuchFieldException {
 
-		Field[] declaredFields = Plate.class.getDeclaredFields();
+        Field[] declaredFields1 = Orange.class.getDeclaredFields();
+
+
+        Field[] declaredFields = Plate.class.getDeclaredFields();
 		Field fieldI = Plate.class.getDeclaredField("list2");
 		ParameterizedType genericType2 = (ParameterizedType) fieldI.getGenericType();
 

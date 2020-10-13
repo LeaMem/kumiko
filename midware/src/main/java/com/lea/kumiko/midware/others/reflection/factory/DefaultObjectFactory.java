@@ -23,12 +23,12 @@ public class DefaultObjectFactory implements ObjectFactory, Serializable {
 	@Override
 	public <T> T create(Class<T> type, List<Class<?>> constructorArgTypes, List<Object> constructorArgs) {
 		Class<?> classToCreate = resolveInterface(type);
-
+		return instantiateClass(type, constructorArgTypes, constructorArgs);
 	}
 
 	@Override
 	public <T> boolean isCollection(Class<T> type) {
-		return false;
+	    return Collection.class.isAssignableFrom(type);
 	}
 
 	protected Class<?> resolveInterface(Class<?> type) {
@@ -47,6 +47,14 @@ public class DefaultObjectFactory implements ObjectFactory, Serializable {
 		return classToCreate;
 	}
 
+    /**
+     *      通过构造器初始化对象
+     * @param type
+     * @param constructorArgTypes
+     * @param constructorArgs
+     * @param <T>
+     * @return
+     */
 	private <T> T instantiateClass(Class<T> type, List<Class<?>> constructorArgTypes, List<Object> constructorArgs) {
 		try {
 			Constructor<T> constructor = null;
@@ -63,9 +71,20 @@ public class DefaultObjectFactory implements ObjectFactory, Serializable {
 					}
 				}
 			}
-
+			constructor = type.getDeclaredConstructor(constructorArgTypes.toArray(new Class[0]));
+			try{
+			    return constructor.newInstance(constructorArgs.toArray(new Object[0]));
+            }catch (IllegalAccessException e){
+			    if(Reflector.canControlMemberAccessible()){
+			        constructor.setAccessible(true);
+			        return constructor.newInstance(constructorArgs.toArray(new Object[0]));
+                }else{
+			        throw e;
+                }
+            }
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw new RuntimeException("constructor error");
 		}
 	}
 }
