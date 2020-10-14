@@ -12,6 +12,7 @@ public abstract class AbsT implements Runnable{
     public abstract List<Integer> getName();
 
     public static void main(String[] args) throws NoSuchMethodException, NoSuchFieldException {
+        Method[] declaredMethods = AbsT.class.getDeclaredMethods();
         Method getName = AbsT.class.getMethod("getName");
         Type returnType = getName.getGenericReturnType();
         Field ding = AbsT.class.getDeclaredField("ding");
