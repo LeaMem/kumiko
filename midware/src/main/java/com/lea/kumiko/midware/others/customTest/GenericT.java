@@ -4,6 +4,7 @@ import java.lang.reflect.Array;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class GenericT<T, K, M> {
@@ -19,7 +20,9 @@ public class GenericT<T, K, M> {
 
 	public static void main(String[] args) {
 
-
+		List<String> list1 = new ArrayList<>();
+		List<Integer> list2 = new ArrayList<>();
+		TypeVariable<?>[] typeParameters1 = list1.getClass().getTypeParameters();
 
 		Class<String[]> aClass = String[].class;
 		Class<?> aClass1 = Array.newInstance(String.class, 0).getClass();

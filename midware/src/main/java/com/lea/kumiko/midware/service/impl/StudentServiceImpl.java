@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tk.mybatis.mapper.entity.Condition;
 
 import java.util.List;
 
@@ -32,5 +33,10 @@ public class StudentServiceImpl extends AbstractService<Student> implements IStu
         studentMapper.insertSelective(student);
         Integer.valueOf("sdf");
         return student.getId();
+    }
+
+    public static void main(String[] args) {
+        StudentServiceImpl studentService = new StudentServiceImpl();
+        Condition conditionV2 = studentService.getConditionV2();
     }
 }

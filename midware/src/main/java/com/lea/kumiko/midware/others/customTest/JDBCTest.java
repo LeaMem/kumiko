@@ -43,6 +43,10 @@ public class JDBCTest {
 //            statement.setInt(1, 1);
             ResultSet resultSet = statement.executeQuery();
 
+            ResultSetMetaData metaData = resultSet.getMetaData();
+            String columnClassName = metaData.getColumnClassName(1);
+            System.out.println(columnClassName);
+
             while(resultSet.next()){
                 String deptName = resultSet.getString("department_name");
                 System.out.println(deptName);
