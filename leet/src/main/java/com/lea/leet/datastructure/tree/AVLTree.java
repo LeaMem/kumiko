@@ -209,13 +209,13 @@ public class AVLTree<T extends Comparable<T>> {
 
     public static class AVLTreeNode<T extends Comparable<T>> {
 
-        T key;
+        public T key;
 
-        int height;
+        public int height;
 
-        AVLTreeNode<T> left;
+        public AVLTreeNode<T> left;
 
-        AVLTreeNode<T> right;
+        public AVLTreeNode<T> right;
 
         public AVLTreeNode(T key, AVLTreeNode<T> left, AVLTreeNode<T> right) {
             this.key = key;
