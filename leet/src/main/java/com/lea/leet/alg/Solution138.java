@@ -6,10 +6,10 @@ import java.util.Map;
 
 public class Solution138 {
 
-    class Node {
-        int val;
-        Node next;
-        Node random;
+    public static class Node {
+        public int val;
+        public Node next;
+        public Node random;
 
         public Node(int val) {
             this.val = val;
