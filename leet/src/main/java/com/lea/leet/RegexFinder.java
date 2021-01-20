@@ -23,7 +23,17 @@ public class RegexFinder {
 //		String path = "F:\\taApi\\ta-api\\src\\main\\java\\com\\qingqing";
 //		String path = "F:\\ta-ordersvc\\svc\\src\\main\\java\\com";
 //		String path = "F:\\tcsvc\\tc-svc\\src\\main\\java";
-		String path = "F:\\traapi\\tra-svc\\src\\main\\java\\com";
+//		String path = "F:\\traapi\\tra-svc\\src\\main\\java\\com";
+//		String path = "C:\\Users\\cuijin03\\IdeaProjects\\op";
+//		String path = "C:\\Users\\cuijin03\\IdeaProjects\\ta";
+//		String path = "C:\\Users\\cuijin03\\IdeaProjects\\tsweb";
+//		String path = "C:\\Users\\cuijin03\\IdeaProjects\\cr-web";
+//		String path = "C:\\Users\\cuijin03\\IdeaProjects\\tcweb";
+//		String path = "C:\\Users\\cuijin03\\IdeaProjects\\traweb";
+//		String path = "C:\\Users\\cuijin03\\IdeaProjects\\amb-op";
+		String path = "C:\\Users\\cuijin03\\IdeaProjects\\amb-svc";
+
+
 
 		Set<String> set = new HashSet<>();
 
