@@ -20,8 +20,11 @@ public class ListNode {
         ListNode tail = head;
 
         while (scanner.hasNext()) {
-            int val = scanner.nextInt();
-            ListNode listNode = new ListNode(val);
+            String val = scanner.next();
+            if(val.equals("eof")){
+                return head.next;
+            }
+            ListNode listNode = new ListNode(Integer.parseInt(val));
             tail.next = listNode;
             tail = listNode;
         }
