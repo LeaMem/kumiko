@@ -37,9 +37,12 @@ public class ForJob215S {
     }
 
     public static void main(String[] args) {
-        ForJob215S forJob215S = new ForJob215S();
-        int kthLargest = forJob215S.findKthLargest(new int[]{3, 2, 1, 5, 6, 4}, 2);
-        System.out.println(kthLargest);
+//        ForJob215S forJob215S = new ForJob215S();
+//        int kthLargest = forJob215S.findKthLargest(new int[]{3, 2, 1, 5, 6, 4}, 2);
+//        System.out.println(kthLargest);
+        System.out.println(Integer.MAX_VALUE);
+        System.out.println((1 << (32 - 16)) - 1);
+        System.out.println(1 << 32 - 1);
     }
 
 }

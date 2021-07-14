@@ -5,10 +5,10 @@ public class Student extends Person {
 
     private String name;
 
-    public Student(String name) {
-        super(name);
-        this.name = "student" + name;
+    public Student() {
+
     }
+
 
     @Override
     public String getName() {
@@ -20,9 +20,5 @@ public class Student extends Person {
         this.name = name;
     }
 
-    public static void main(String[] args) {
-        Person person = new Student("ding");
-        System.out.println(person.getName());
-        System.out.println(System.currentTimeMillis());
-    }
+
 }

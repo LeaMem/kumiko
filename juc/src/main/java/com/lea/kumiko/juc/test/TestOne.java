@@ -1,15 +1,40 @@
 package com.lea.kumiko.juc.test;
 
+import java.lang.reflect.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TestOne {
+public class TestOne implements IFirst{
 
-    public static void main(String[] args) {
+    public String name;
 
-        HashMap<String, Object> map = new HashMap<>();
-        map.put(null, null);
-        System.out.println(map.containsKey(null));
+    public Integer testSecond;
+
+    @Override
+    public void say() {
+
+    }
+
+    public static class TestSecond extends TestOne implements ISecond{
+
+        protected Integer age;
+
+        @Override
+        public void cry() {
+
+        }
+
+        private static class TestThird extends TestSecond{
+
+        }
+    }
+
+    public static void main(String[] args) throws NoSuchFieldException, ClassNotFoundException {
+        Class<Integer> integerClass = int.class;
+        Class<Integer> integerClass1 = Integer.class;
+        System.out.println(integerClass.isPrimitive());
+        System.out.println(integerClass1.isPrimitive());
+
     }
 
 }
